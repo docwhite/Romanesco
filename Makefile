@@ -15,7 +15,7 @@ CXX           = clang++
 DEFINES       = -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I. -isystem /usr/include/qt5 -isystem /usr/include/qt5/QtWidgets -isystem /usr/include/qt5/QtGui -isystem /usr/include/qt5/QtCore -I. -I. -I/usr/lib64/qt5/mkspecs/linux-clang
+INCPATH       = -I. -Iinclude -isystem /usr/include/qt5 -isystem /usr/include/qt5/QtWidgets -isystem /usr/include/qt5/QtGui -isystem /usr/include/qt5/QtCore -I.moc -I.ui -I/usr/lib64/qt5/mkspecs/linux-clang
 QMAKE         = /usr/bin/qmake-qt5
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -33,7 +33,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = Romanesco1.0.0
-DISTDIR = /home/tom/src/romanesco/Romanesco/.tmp/Romanesco1.0.0
+DISTDIR = /home/tom/src/romanesco/Romanesco/.obj/Romanesco1.0.0
 LINK          = clang++
 LFLAGS        = -ccc-gcc-name g++
 LIBS          = $(SUBLIBS) -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
@@ -44,23 +44,23 @@ STRIP         =
 
 ####### Output directory
 
-OBJECTS_DIR   = ./
+OBJECTS_DIR   = .obj/
 
 ####### Files
 
-SOURCES       = main.cpp \
-		mainwindow.cpp \
-		openglwindow.cpp \
-		shaderwindow.cpp moc_mainwindow.cpp \
-		moc_openglwindow.cpp
-OBJECTS       = main.o \
-		mainwindow.o \
-		openglwindow.o \
-		shaderwindow.o \
-		moc_mainwindow.o \
-		moc_openglwindow.o
-DIST          = raymarch.frag \
-		raymarch.vert \
+SOURCES       = src/main.cpp \
+		src/mainwindow.cpp \
+		src/openglwindow.cpp \
+		src/shaderwindow.cpp .moc/moc_mainwindow.cpp \
+		.moc/moc_openglwindow.cpp
+OBJECTS       = .obj/main.o \
+		.obj/mainwindow.o \
+		.obj/openglwindow.o \
+		.obj/shaderwindow.o \
+		.obj/moc_mainwindow.o \
+		.obj/moc_openglwindow.o
+DIST          = shaders/raymarch.frag \
+		shaders/raymarch.vert \
 		/usr/lib64/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib64/qt5/mkspecs/common/shell-unix.conf \
 		/usr/lib64/qt5/mkspecs/common/unix.conf \
@@ -114,12 +114,13 @@ DIST          = raymarch.frag \
 		/usr/lib64/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib64/qt5/mkspecs/features/yacc.prf \
 		/usr/lib64/qt5/mkspecs/features/lex.prf \
-		Romanesco.pro mainwindow.h \
-		openglwindow.h \
-		shaderwindow.h main.cpp \
-		mainwindow.cpp \
-		openglwindow.cpp \
-		shaderwindow.cpp
+		Romanesco.pro include/mainwindow.h \
+		include/openglwindow.h \
+		include/shaderwindow.h \
+		include/ui_mainwindow.h src/main.cpp \
+		src/mainwindow.cpp \
+		src/openglwindow.cpp \
+		src/shaderwindow.cpp
 QMAKE_TARGET  = Romanesco
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = Romanesco
@@ -147,7 +148,7 @@ first: all
 
 ####### Build rules
 
-$(TARGET): ui_mainwindow.h $(OBJECTS)  
+$(TARGET): .ui/ui_mainwindow.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: Romanesco.pro /usr/lib64/qt5/mkspecs/linux-clang/qmake.conf /usr/lib64/qt5/mkspecs/features/spec_pre.prf \
@@ -279,9 +280,9 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents mainwindow.h openglwindow.h shaderwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp mainwindow.cpp openglwindow.cpp shaderwindow.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents mainwindow.ui $(DISTDIR)/
+	$(COPY_FILE) --parents include/mainwindow.h include/openglwindow.h include/shaderwindow.h include/ui_mainwindow.h $(DISTDIR)/
+	$(COPY_FILE) --parents src/main.cpp src/mainwindow.cpp src/openglwindow.cpp src/shaderwindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ui/mainwindow.ui $(DISTDIR)/
 
 
 clean:compiler_clean 
@@ -304,22 +305,22 @@ check: first
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
-compiler_moc_header_make_all: moc_mainwindow.cpp moc_openglwindow.cpp
+compiler_moc_header_make_all: .moc/moc_mainwindow.cpp .moc/moc_openglwindow.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp moc_openglwindow.cpp
-moc_mainwindow.cpp: mainwindow.h
-	/usr/lib64/qt5/bin/moc $(DEFINES) -I/usr/lib64/qt5/mkspecs/linux-clang -I/home/tom/src/romanesco/Romanesco -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I/usr/include/c++/4.9.2 -I/usr/include/c++/4.9.2/x86_64-redhat-linux -I/usr/include/c++/4.9.2/backward -I/usr/lib/gcc/x86_64-redhat-linux/4.9.2/include -I/usr/local/include -I/usr/include mainwindow.h -o moc_mainwindow.cpp
+	-$(DEL_FILE) .moc/moc_mainwindow.cpp .moc/moc_openglwindow.cpp
+.moc/moc_mainwindow.cpp: include/mainwindow.h
+	/usr/lib64/qt5/bin/moc $(DEFINES) -I/usr/lib64/qt5/mkspecs/linux-clang -I/home/tom/src/romanesco/Romanesco -I/home/tom/src/romanesco/Romanesco/include -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I/usr/include/c++/4.9.2 -I/usr/include/c++/4.9.2/x86_64-redhat-linux -I/usr/include/c++/4.9.2/backward -I/usr/lib/gcc/x86_64-redhat-linux/4.9.2/include -I/usr/local/include -I/usr/include include/mainwindow.h -o .moc/moc_mainwindow.cpp
 
-moc_openglwindow.cpp: openglwindow.h
-	/usr/lib64/qt5/bin/moc $(DEFINES) -I/usr/lib64/qt5/mkspecs/linux-clang -I/home/tom/src/romanesco/Romanesco -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I/usr/include/c++/4.9.2 -I/usr/include/c++/4.9.2/x86_64-redhat-linux -I/usr/include/c++/4.9.2/backward -I/usr/lib/gcc/x86_64-redhat-linux/4.9.2/include -I/usr/local/include -I/usr/include openglwindow.h -o moc_openglwindow.cpp
+.moc/moc_openglwindow.cpp: include/openglwindow.h
+	/usr/lib64/qt5/bin/moc $(DEFINES) -I/usr/lib64/qt5/mkspecs/linux-clang -I/home/tom/src/romanesco/Romanesco -I/home/tom/src/romanesco/Romanesco/include -I/usr/include/qt5 -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I/usr/include/c++/4.9.2 -I/usr/include/c++/4.9.2/x86_64-redhat-linux -I/usr/include/c++/4.9.2/backward -I/usr/lib/gcc/x86_64-redhat-linux/4.9.2/include -I/usr/local/include -I/usr/include include/openglwindow.h -o .moc/moc_openglwindow.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h
+compiler_uic_make_all: .ui/ui_mainwindow.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h
-ui_mainwindow.h: mainwindow.ui
-	/usr/lib64/qt5/bin/uic mainwindow.ui -o ui_mainwindow.h
+	-$(DEL_FILE) .ui/ui_mainwindow.h
+.ui/ui_mainwindow.h: ui/mainwindow.ui
+	/usr/lib64/qt5/bin/uic ui/mainwindow.ui -o .ui/ui_mainwindow.h
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
@@ -331,27 +332,27 @@ compiler_clean: compiler_moc_header_clean compiler_uic_clean
 
 ####### Compile
 
-main.o: main.cpp mainwindow.h \
-		shaderwindow.h \
-		openglwindow.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
+.obj/main.o: src/main.cpp include/mainwindow.h \
+		include/shaderwindow.h \
+		include/openglwindow.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o .obj/main.o src/main.cpp
 
-mainwindow.o: mainwindow.cpp mainwindow.h \
-		ui_mainwindow.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
+.obj/mainwindow.o: src/mainwindow.cpp include/mainwindow.h \
+		include/ui_mainwindow.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o .obj/mainwindow.o src/mainwindow.cpp
 
-openglwindow.o: openglwindow.cpp openglwindow.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o openglwindow.o openglwindow.cpp
+.obj/openglwindow.o: src/openglwindow.cpp include/openglwindow.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o .obj/openglwindow.o src/openglwindow.cpp
 
-shaderwindow.o: shaderwindow.cpp shaderwindow.h \
-		openglwindow.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o shaderwindow.o shaderwindow.cpp
+.obj/shaderwindow.o: src/shaderwindow.cpp include/shaderwindow.h \
+		include/openglwindow.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o .obj/shaderwindow.o src/shaderwindow.cpp
 
-moc_mainwindow.o: moc_mainwindow.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
+.obj/moc_mainwindow.o: .moc/moc_mainwindow.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o .obj/moc_mainwindow.o .moc/moc_mainwindow.cpp
 
-moc_openglwindow.o: moc_openglwindow.cpp 
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_openglwindow.o moc_openglwindow.cpp
+.obj/moc_openglwindow.o: .moc/moc_openglwindow.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o .obj/moc_openglwindow.o .moc/moc_openglwindow.cpp
 
 ####### Install
 
