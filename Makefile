@@ -14,7 +14,7 @@ CC            = clang
 CXX           = clang++
 DEFINES       = -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -O2 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-CXXFLAGS      = -pipe -O2 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
+CXXFLAGS      = -pipe -I/usr/include/SDL2 -D_REENTRANT -O2 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 INCPATH       = -I. -Iinclude -isystem /usr/include/qt5 -isystem /usr/include/qt5/QtWidgets -isystem /usr/include/qt5/QtGui -isystem /usr/include/qt5/QtCore -I.moc -I.ui -I/usr/lib64/qt5/mkspecs/linux-clang
 QMAKE         = /usr/bin/qmake-qt5
 DEL_FILE      = rm -f
@@ -36,7 +36,7 @@ DISTNAME      = Romanesco1.0.0
 DISTDIR = /home/tom/src/romanesco/Romanesco/.obj/Romanesco1.0.0
 LINK          = clang++
 LFLAGS        = -ccc-gcc-name g++
-LIBS          = $(SUBLIBS) -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
+LIBS          = $(SUBLIBS) -lSDL2 -lQt5Widgets -lQt5Gui -lQt5Core -lGL -lpthread 
 AR            = ar cqs
 RANLIB        = 
 SED           = sed
@@ -116,8 +116,10 @@ DIST          = shaders/raymarch.frag \
 		/usr/lib64/qt5/mkspecs/features/lex.prf \
 		Romanesco.pro include/mainwindow.h \
 		include/openglwindow.h \
+		include/rendermath.h \
 		include/shaderwindow.h \
-		include/ui_mainwindow.h src/main.cpp \
+		include/ui_mainwindow.h \
+		include/rendermath.h src/main.cpp \
 		src/mainwindow.cpp \
 		src/openglwindow.cpp \
 		src/shaderwindow.cpp
@@ -280,7 +282,7 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents include/mainwindow.h include/openglwindow.h include/shaderwindow.h include/ui_mainwindow.h $(DISTDIR)/
+	$(COPY_FILE) --parents include/mainwindow.h include/openglwindow.h include/rendermath.h include/shaderwindow.h include/ui_mainwindow.h include/rendermath.h $(DISTDIR)/
 	$(COPY_FILE) --parents src/main.cpp src/mainwindow.cpp src/openglwindow.cpp src/shaderwindow.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ui/mainwindow.ui $(DISTDIR)/
 
