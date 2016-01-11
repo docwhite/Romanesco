@@ -10,9 +10,14 @@ isEqual(QT_MAJOR_VERSION, 5) {
 
 UI_DIR=ui
 MOC_DIR=moc
- 
-CONFIG+=c++11
-CONFIG-=app_bundle
+
+CONFIG += c++11
+CONFIG += debug_and_releas
+CONFIG -= app_bundle
+
+# Force debug for now
+QMAKE_CXXFLAGS += -g
+
 QT+=gui opengl core
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -74,8 +79,9 @@ QMAKE_LIBDIR += $$CUDA_SDK/common/lib
 macx:QMAKE_LIBDIR += /Developer/OptiX/lib64
 linux:QMAKE_LIBDIR += /home/tom/src/optix/lib64
 linux:QMAKE_LIBDIR += /home/tom/src/optix/build/lib
+
 #Add our cuda and optix libraries
-LIBS += -lcudart  -loptix -loptixu -lglut -lsutil
+LIBS += -lcudart  -loptix -loptixu -lglut -lsutil -lnvrtc
  
 # nvcc flags (ptxas option verbose is always useful)
 # add the PTX flags to compile optix files
