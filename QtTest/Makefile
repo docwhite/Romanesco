@@ -132,7 +132,7 @@ first: all
 
 ####### Build rules
 
-$(TARGET): ptx/block_floor.cu.ptx ptx/constantbg.cu.ptx ptx/draw.cu.ptx ptx/julia.cu.ptx ptx/normal_shader.cu.ptx ptx/pinhole_camera.cu.ptx ptx/sphere.cu.ptx $(OBJECTS)  
+$(TARGET): ptx/block_floor.cu.ptx ptx/constantbg.cu.ptx ptx/draw.cu.ptx ptx/functor.cu.ptx ptx/julia.cu.ptx ptx/normal_shader.cu.ptx ptx/pinhole_camera.cu.ptx ptx/raymarch.cu.ptx ptx/raymarch_geo.cu.ptx ptx/raymarch_shader.cu.ptx ptx/sphere.cu.ptx ptx/test.cu.ptx $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: optixqt.pro .qmake.cache /usr/lib64/qt5/mkspecs/linux-clang/qmake.conf /usr/lib64/qt5/mkspecs/features/spec_pre.prf \
@@ -270,7 +270,7 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents kernel/block_floor.cu kernel/constantbg.cu kernel/draw.cu kernel/julia.cu kernel/normal_shader.cu kernel/pinhole_camera.cu kernel/sphere.cu $(DISTDIR)/
+	$(COPY_FILE) --parents kernel/block_floor.cu kernel/constantbg.cu kernel/draw.cu kernel/functor.cu kernel/julia.cu kernel/normal_shader.cu kernel/pinhole_camera.cu kernel/raymarch.cu kernel/raymarch_geo.cu kernel/raymarch_shader.cu kernel/sphere.cu kernel/test.cu $(DISTDIR)/
 	$(COPY_FILE) --parents include/commonStructs.h include/openglwindow.h include/optixscene.h include/pinholecamera.h include/rendermath.h include/shaderwindow.h include/gui/gridscene.h include/gui/mainwindow.h include/gui/qneblock.h include/gui/qneconnection.h include/gui/qneport.h include/gui/qnodeseditor.h include/gui/testglwidget.h include/gui/ui_qnemainwindow.h $(DISTDIR)/
 	$(COPY_FILE) --parents src/main.cpp src/openglwindow.cpp src/optixscene.cpp src/pinholecamera.cpp src/rendermath.cpp src/shaderwindow.cpp src/gui/gridscene.cpp src/gui/mainwindow.cpp src/gui/qneblock.cpp src/gui/qneconnection.cpp src/gui/qneport.cpp src/gui/qnodeseditor.cpp src/gui/testglwidget.cpp $(DISTDIR)/
 
@@ -293,9 +293,9 @@ mocables: compiler_moc_header_make_all compiler_moc_source_make_all
 
 check: first
 
-compiler_optix_make_all: ptx/block_floor.cu.ptx ptx/constantbg.cu.ptx ptx/draw.cu.ptx ptx/julia.cu.ptx ptx/normal_shader.cu.ptx ptx/pinhole_camera.cu.ptx ptx/sphere.cu.ptx
+compiler_optix_make_all: ptx/block_floor.cu.ptx ptx/constantbg.cu.ptx ptx/draw.cu.ptx ptx/functor.cu.ptx ptx/julia.cu.ptx ptx/normal_shader.cu.ptx ptx/pinhole_camera.cu.ptx ptx/raymarch.cu.ptx ptx/raymarch_geo.cu.ptx ptx/raymarch_shader.cu.ptx ptx/sphere.cu.ptx ptx/test.cu.ptx
 compiler_optix_clean:
-	-$(DEL_FILE) ptx/block_floor.cu.ptx ptx/constantbg.cu.ptx ptx/draw.cu.ptx ptx/julia.cu.ptx ptx/normal_shader.cu.ptx ptx/pinhole_camera.cu.ptx ptx/sphere.cu.ptx
+	-$(DEL_FILE) ptx/block_floor.cu.ptx ptx/constantbg.cu.ptx ptx/draw.cu.ptx ptx/functor.cu.ptx ptx/julia.cu.ptx ptx/normal_shader.cu.ptx ptx/pinhole_camera.cu.ptx ptx/raymarch.cu.ptx ptx/raymarch_geo.cu.ptx ptx/raymarch_shader.cu.ptx ptx/sphere.cu.ptx ptx/test.cu.ptx
 ptx/block_floor.cu.ptx: /home/tom/src/optix/include/optix.h \
 		/home/tom/src/optix/include/optix_device.h \
 		/home/tom/src/optix/include/internal/optix_datatypes.h \
@@ -379,6 +379,9 @@ ptx/draw.cu.ptx: /home/tom/src/optix/include/optix.h \
 		/usr/local/cuda-7.0/targets/x86_64-linux/include/vector_functions.hpp \
 		kernel/draw.cu
 	/usr/local/cuda-7.0/bin/nvcc -m64 -gencode arch=compute_50,code=sm_50 --compiler-options -fno-strict-aliasing -use_fast_math --ptxas-options=-v -ptx -I./include -I./include/gui -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/include -I/usr/local/cuda-7.0/common/inc/ -I/usr/local/cuda-7.0/../shared/inc/ -I/home/tom/src/optix/include  -lpthread -lIlmImf -lHalf -L/usr/local/lib -lcudart -loptix -loptixu -lglut -lsutil -lnvrtc kernel/draw.cu -o ptx/draw.cu.ptx
+
+ptx/functor.cu.ptx: kernel/functor.cu
+	/usr/local/cuda-7.0/bin/nvcc -m64 -gencode arch=compute_50,code=sm_50 --compiler-options -fno-strict-aliasing -use_fast_math --ptxas-options=-v -ptx -I./include -I./include/gui -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/include -I/usr/local/cuda-7.0/common/inc/ -I/usr/local/cuda-7.0/../shared/inc/ -I/home/tom/src/optix/include  -lpthread -lIlmImf -lHalf -L/usr/local/lib -lcudart -loptix -loptixu -lglut -lsutil -lnvrtc kernel/functor.cu -o ptx/functor.cu.ptx
 
 ptx/julia.cu.ptx: /home/tom/src/optix/include/optix.h \
 		/home/tom/src/optix/include/optix_device.h \
@@ -465,6 +468,38 @@ ptx/pinhole_camera.cu.ptx: /home/tom/src/optix/include/optix_world.h \
 		kernel/pinhole_camera.cu
 	/usr/local/cuda-7.0/bin/nvcc -m64 -gencode arch=compute_50,code=sm_50 --compiler-options -fno-strict-aliasing -use_fast_math --ptxas-options=-v -ptx -I./include -I./include/gui -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/include -I/usr/local/cuda-7.0/common/inc/ -I/usr/local/cuda-7.0/../shared/inc/ -I/home/tom/src/optix/include  -lpthread -lIlmImf -lHalf -L/usr/local/lib -lcudart -loptix -loptixu -lglut -lsutil -lnvrtc kernel/pinhole_camera.cu -o ptx/pinhole_camera.cu.ptx
 
+ptx/raymarch.cu.ptx: /home/tom/src/optix/include/optix.h \
+		/home/tom/src/optix/include/optix_device.h \
+		/home/tom/src/optix/include/internal/optix_datatypes.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/host_defines.h \
+		/home/tom/src/optix/include/optixu/optixu_vector_types.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/vector_types.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/builtin_types.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/device_types.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/driver_types.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/surface_types.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/texture_types.h \
+		/home/tom/src/optix/include/internal/optix_declarations.h \
+		/home/tom/src/optix/include/internal/optix_internal.h \
+		/home/tom/src/optix/include/internal/optix_defines.h \
+		/home/tom/src/optix/include/optix_sizet.h \
+		/home/tom/src/optix/include/optix_host.h \
+		/home/tom/src/optix/include/optixu/optixu_math_namespace.h \
+		/home/tom/src/optix/include/optixu/optixu_vector_functions.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/vector_functions.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/vector_functions.hpp \
+		/home/tom/src/optix/include/optixu/optixu_matrix_namespace.h \
+		/home/tom/src/optix/include/optixu/optixu_aabb_namespace.h \
+		kernel/distance_field.h \
+		kernel/raymarch.cu
+	/usr/local/cuda-7.0/bin/nvcc -m64 -gencode arch=compute_50,code=sm_50 --compiler-options -fno-strict-aliasing -use_fast_math --ptxas-options=-v -ptx -I./include -I./include/gui -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/include -I/usr/local/cuda-7.0/common/inc/ -I/usr/local/cuda-7.0/../shared/inc/ -I/home/tom/src/optix/include  -lpthread -lIlmImf -lHalf -L/usr/local/lib -lcudart -loptix -loptixu -lglut -lsutil -lnvrtc kernel/raymarch.cu -o ptx/raymarch.cu.ptx
+
+ptx/raymarch_geo.cu.ptx: kernel/raymarch_geo.cu
+	/usr/local/cuda-7.0/bin/nvcc -m64 -gencode arch=compute_50,code=sm_50 --compiler-options -fno-strict-aliasing -use_fast_math --ptxas-options=-v -ptx -I./include -I./include/gui -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/include -I/usr/local/cuda-7.0/common/inc/ -I/usr/local/cuda-7.0/../shared/inc/ -I/home/tom/src/optix/include  -lpthread -lIlmImf -lHalf -L/usr/local/lib -lcudart -loptix -loptixu -lglut -lsutil -lnvrtc kernel/raymarch_geo.cu -o ptx/raymarch_geo.cu.ptx
+
+ptx/raymarch_shader.cu.ptx: kernel/raymarch_shader.cu
+	/usr/local/cuda-7.0/bin/nvcc -m64 -gencode arch=compute_50,code=sm_50 --compiler-options -fno-strict-aliasing -use_fast_math --ptxas-options=-v -ptx -I./include -I./include/gui -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/include -I/usr/local/cuda-7.0/common/inc/ -I/usr/local/cuda-7.0/../shared/inc/ -I/home/tom/src/optix/include  -lpthread -lIlmImf -lHalf -L/usr/local/lib -lcudart -loptix -loptixu -lglut -lsutil -lnvrtc kernel/raymarch_shader.cu -o ptx/raymarch_shader.cu.ptx
+
 ptx/sphere.cu.ptx: /home/tom/src/optix/include/optix_world.h \
 		/home/tom/src/optix/include/optix_host.h \
 		/home/tom/src/optix/include/internal/optix_declarations.h \
@@ -499,6 +534,9 @@ ptx/sphere.cu.ptx: /home/tom/src/optix/include/optix_world.h \
 		/home/tom/src/optix/include/optixu/optixu_math_stream_namespace.h \
 		kernel/sphere.cu
 	/usr/local/cuda-7.0/bin/nvcc -m64 -gencode arch=compute_50,code=sm_50 --compiler-options -fno-strict-aliasing -use_fast_math --ptxas-options=-v -ptx -I./include -I./include/gui -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/include -I/usr/local/cuda-7.0/common/inc/ -I/usr/local/cuda-7.0/../shared/inc/ -I/home/tom/src/optix/include  -lpthread -lIlmImf -lHalf -L/usr/local/lib -lcudart -loptix -loptixu -lglut -lsutil -lnvrtc kernel/sphere.cu -o ptx/sphere.cu.ptx
+
+ptx/test.cu.ptx: kernel/test.cu
+	/usr/local/cuda-7.0/bin/nvcc -m64 -gencode arch=compute_50,code=sm_50 --compiler-options -fno-strict-aliasing -use_fast_math --ptxas-options=-v -ptx -I./include -I./include/gui -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/include -I/usr/local/cuda-7.0/common/inc/ -I/usr/local/cuda-7.0/../shared/inc/ -I/home/tom/src/optix/include  -lpthread -lIlmImf -lHalf -L/usr/local/lib -lcudart -loptix -loptixu -lglut -lsutil -lnvrtc kernel/test.cu -o ptx/test.cu.ptx
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
@@ -769,7 +807,8 @@ obj/optixscene.o: src/optixscene.cpp include/optixscene.h \
 		/usr/local/cuda-7.0/targets/x86_64-linux/include/device_launch_parameters.h \
 		/home/tom/src/optix/SDK/sutil/Mouse.h \
 		/home/tom/src/optix/include/optixu/optixu_matrix_namespace.h \
-		include/commonStructs.h
+		include/commonStructs.h \
+		/home/tom/src/optix/SDK/sutil/ImageLoader.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/optixscene.o src/optixscene.cpp
 
 obj/pinholecamera.o: src/pinholecamera.cpp include/pinholecamera.h \
