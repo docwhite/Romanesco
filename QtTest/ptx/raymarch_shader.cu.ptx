@@ -103,7 +103,8 @@
 	// .globl	shade_hook
 .visible .func  (.param .align 4 .b8 func_retval0[12]) shade_hook(
 	.param .align 4 .b8 shade_hook_param_0[12],
-	.param .b32 shade_hook_param_1
+	.param .align 4 .b8 shade_hook_param_1[12],
+	.param .b32 shade_hook_param_2
 )
 {
 	.reg .f32 	%f<3>;

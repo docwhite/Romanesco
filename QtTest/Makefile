@@ -63,6 +63,7 @@ SOURCES       = src/main.cpp \
 		src/gui/qnodeseditor.cpp \
 		src/gui/testglwidget.cpp \
 		src/SDFOps/Base_SDFOP.cpp \
+		src/SDFOps/Mandelbulb_SDFOP.cpp \
 		src/SDFOps/Menger_SDFOP.cpp moc/moc_openglwindow.cpp \
 		moc/moc_mainwindow.cpp \
 		moc/moc_qnodeseditor.cpp
@@ -81,6 +82,7 @@ OBJECTS       = obj/main.o \
 		obj/qnodeseditor.o \
 		obj/testglwidget.o \
 		obj/Base_SDFOP.o \
+		obj/Mandelbulb_SDFOP.o \
 		obj/Menger_SDFOP.o \
 		obj/moc_openglwindow.o \
 		obj/moc_mainwindow.o \
@@ -101,6 +103,7 @@ DIST          = optixqt.pro include/commonStructs.h \
 		include/gui/testglwidget.h \
 		include/gui/ui_qnemainwindow.h \
 		include/SDFOps/Base_SDFOP.h \
+		include/SDFOps/Mandelbulb_SDFOP.h \
 		include/SDFOps/Menger_SDFOP.h src/main.cpp \
 		src/openglwindow.cpp \
 		src/optixscene.cpp \
@@ -116,6 +119,7 @@ DIST          = optixqt.pro include/commonStructs.h \
 		src/gui/qnodeseditor.cpp \
 		src/gui/testglwidget.cpp \
 		src/SDFOps/Base_SDFOP.cpp \
+		src/SDFOps/Mandelbulb_SDFOP.cpp \
 		src/SDFOps/Menger_SDFOP.cpp
 QMAKE_TARGET  = optixqt
 DESTDIR       = #avoid trailing-slash linebreak
@@ -283,8 +287,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents kernel/block_floor.cu kernel/constantbg.cu kernel/draw.cu kernel/functor.cu kernel/julia.cu kernel/normal_shader.cu kernel/pinhole_camera.cu kernel/raymarch.cu kernel/raymarch_geo.cu kernel/raymarch_shader.cu kernel/sphere.cu kernel/test.cu $(DISTDIR)/
-	$(COPY_FILE) --parents include/commonStructs.h include/openglwindow.h include/optixscene.h include/pinholecamera.h include/rendermath.h include/runtimecompiler.h include/shaderwindow.h include/gui/gridscene.h include/gui/mainwindow.h include/gui/qneblock.h include/gui/qneconnection.h include/gui/qneport.h include/gui/qnodeseditor.h include/gui/testglwidget.h include/gui/ui_qnemainwindow.h include/SDFOps/Base_SDFOP.h include/SDFOps/Menger_SDFOP.h $(DISTDIR)/
-	$(COPY_FILE) --parents src/main.cpp src/openglwindow.cpp src/optixscene.cpp src/pinholecamera.cpp src/rendermath.cpp src/runtimecompiler.cpp src/shaderwindow.cpp src/gui/gridscene.cpp src/gui/mainwindow.cpp src/gui/qneblock.cpp src/gui/qneconnection.cpp src/gui/qneport.cpp src/gui/qnodeseditor.cpp src/gui/testglwidget.cpp src/SDFOps/Base_SDFOP.cpp src/SDFOps/Menger_SDFOP.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents include/commonStructs.h include/openglwindow.h include/optixscene.h include/pinholecamera.h include/rendermath.h include/runtimecompiler.h include/shaderwindow.h include/gui/gridscene.h include/gui/mainwindow.h include/gui/qneblock.h include/gui/qneconnection.h include/gui/qneport.h include/gui/qnodeseditor.h include/gui/testglwidget.h include/gui/ui_qnemainwindow.h include/SDFOps/Base_SDFOP.h include/SDFOps/Mandelbulb_SDFOP.h include/SDFOps/Menger_SDFOP.h $(DISTDIR)/
+	$(COPY_FILE) --parents src/main.cpp src/openglwindow.cpp src/optixscene.cpp src/pinholecamera.cpp src/rendermath.cpp src/runtimecompiler.cpp src/shaderwindow.cpp src/gui/gridscene.cpp src/gui/mainwindow.cpp src/gui/qneblock.cpp src/gui/qneconnection.cpp src/gui/qneport.cpp src/gui/qnodeseditor.cpp src/gui/testglwidget.cpp src/SDFOps/Base_SDFOP.cpp src/SDFOps/Mandelbulb_SDFOP.cpp src/SDFOps/Menger_SDFOP.cpp $(DISTDIR)/
 
 
 clean:compiler_clean 
@@ -1241,7 +1245,10 @@ obj/testglwidget.o: src/gui/testglwidget.cpp include/gui/testglwidget.h \
 obj/Base_SDFOP.o: src/SDFOps/Base_SDFOP.cpp include/SDFOps/Base_SDFOP.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Base_SDFOP.o src/SDFOps/Base_SDFOP.cpp
 
-obj/Menger_SDFOP.o: src/SDFOps/Menger_SDFOP.cpp 
+obj/Mandelbulb_SDFOP.o: src/SDFOps/Mandelbulb_SDFOP.cpp include/SDFOps/Mandelbulb_SDFOP.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Mandelbulb_SDFOP.o src/SDFOps/Mandelbulb_SDFOP.cpp
+
+obj/Menger_SDFOP.o: src/SDFOps/Menger_SDFOP.cpp include/SDFOps/Menger_SDFOP.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Menger_SDFOP.o src/SDFOps/Menger_SDFOP.cpp
 
 obj/moc_openglwindow.o: moc/moc_openglwindow.cpp 
