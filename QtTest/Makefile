@@ -15,7 +15,7 @@ CXX           = clang++
 DEFINES       = -DQT5BUILD -DQT_OPENGL_LIB -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -W -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -g -g -std=c++11 -Wall -W -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I. -Iinclude -Iinclude/gui -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/targets/x86_64-linux/include -I/usr/local/cuda-7.0/common/inc/ -I/usr/local/cuda-7.0/../shared/inc/ -I/home/tom/src/optix/include -isystem /usr/include/qt5 -isystem /usr/include/qt5/QtOpenGL -isystem /usr/include/qt5/QtWidgets -isystem /usr/include/qt5/QtGui -isystem /usr/include/qt5/QtCore -Imoc -I/usr/lib64/qt5/mkspecs/linux-clang
+INCPATH       = -I. -Iinclude -Iinclude/gui -Iinclude/SDFOps -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/targets/x86_64-linux/include -I/usr/local/cuda-7.0/common/inc/ -I/usr/local/cuda-7.0/../shared/inc/ -I/home/tom/src/optix/include -isystem /usr/include/qt5 -isystem /usr/include/qt5/QtOpenGL -isystem /usr/include/qt5/QtWidgets -isystem /usr/include/qt5/QtGui -isystem /usr/include/qt5/QtCore -Imoc -I/usr/lib64/qt5/mkspecs/linux-clang
 QMAKE         = /usr/bin/qmake-qt5
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -53,6 +53,7 @@ SOURCES       = src/main.cpp \
 		src/optixscene.cpp \
 		src/pinholecamera.cpp \
 		src/rendermath.cpp \
+		src/runtimecompiler.cpp \
 		src/shaderwindow.cpp \
 		src/gui/gridscene.cpp \
 		src/gui/mainwindow.cpp \
@@ -60,7 +61,9 @@ SOURCES       = src/main.cpp \
 		src/gui/qneconnection.cpp \
 		src/gui/qneport.cpp \
 		src/gui/qnodeseditor.cpp \
-		src/gui/testglwidget.cpp moc/moc_openglwindow.cpp \
+		src/gui/testglwidget.cpp \
+		src/SDFOps/Base_SDFOP.cpp \
+		src/SDFOps/Menger_SDFOP.cpp moc/moc_openglwindow.cpp \
 		moc/moc_mainwindow.cpp \
 		moc/moc_qnodeseditor.cpp
 OBJECTS       = obj/main.o \
@@ -68,6 +71,7 @@ OBJECTS       = obj/main.o \
 		obj/optixscene.o \
 		obj/pinholecamera.o \
 		obj/rendermath.o \
+		obj/runtimecompiler.o \
 		obj/shaderwindow.o \
 		obj/gridscene.o \
 		obj/mainwindow.o \
@@ -76,6 +80,8 @@ OBJECTS       = obj/main.o \
 		obj/qneport.o \
 		obj/qnodeseditor.o \
 		obj/testglwidget.o \
+		obj/Base_SDFOP.o \
+		obj/Menger_SDFOP.o \
 		obj/moc_openglwindow.o \
 		obj/moc_mainwindow.o \
 		obj/moc_qnodeseditor.o
@@ -84,6 +90,7 @@ DIST          = optixqt.pro include/commonStructs.h \
 		include/optixscene.h \
 		include/pinholecamera.h \
 		include/rendermath.h \
+		include/runtimecompiler.h \
 		include/shaderwindow.h \
 		include/gui/gridscene.h \
 		include/gui/mainwindow.h \
@@ -92,11 +99,14 @@ DIST          = optixqt.pro include/commonStructs.h \
 		include/gui/qneport.h \
 		include/gui/qnodeseditor.h \
 		include/gui/testglwidget.h \
-		include/gui/ui_qnemainwindow.h src/main.cpp \
+		include/gui/ui_qnemainwindow.h \
+		include/SDFOps/Base_SDFOP.h \
+		include/SDFOps/Menger_SDFOP.h src/main.cpp \
 		src/openglwindow.cpp \
 		src/optixscene.cpp \
 		src/pinholecamera.cpp \
 		src/rendermath.cpp \
+		src/runtimecompiler.cpp \
 		src/shaderwindow.cpp \
 		src/gui/gridscene.cpp \
 		src/gui/mainwindow.cpp \
@@ -104,7 +114,9 @@ DIST          = optixqt.pro include/commonStructs.h \
 		src/gui/qneconnection.cpp \
 		src/gui/qneport.cpp \
 		src/gui/qnodeseditor.cpp \
-		src/gui/testglwidget.cpp
+		src/gui/testglwidget.cpp \
+		src/SDFOps/Base_SDFOP.cpp \
+		src/SDFOps/Menger_SDFOP.cpp
 QMAKE_TARGET  = optixqt
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = optixqt
@@ -271,8 +283,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents kernel/block_floor.cu kernel/constantbg.cu kernel/draw.cu kernel/functor.cu kernel/julia.cu kernel/normal_shader.cu kernel/pinhole_camera.cu kernel/raymarch.cu kernel/raymarch_geo.cu kernel/raymarch_shader.cu kernel/sphere.cu kernel/test.cu $(DISTDIR)/
-	$(COPY_FILE) --parents include/commonStructs.h include/openglwindow.h include/optixscene.h include/pinholecamera.h include/rendermath.h include/shaderwindow.h include/gui/gridscene.h include/gui/mainwindow.h include/gui/qneblock.h include/gui/qneconnection.h include/gui/qneport.h include/gui/qnodeseditor.h include/gui/testglwidget.h include/gui/ui_qnemainwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents src/main.cpp src/openglwindow.cpp src/optixscene.cpp src/pinholecamera.cpp src/rendermath.cpp src/shaderwindow.cpp src/gui/gridscene.cpp src/gui/mainwindow.cpp src/gui/qneblock.cpp src/gui/qneconnection.cpp src/gui/qneport.cpp src/gui/qnodeseditor.cpp src/gui/testglwidget.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents include/commonStructs.h include/openglwindow.h include/optixscene.h include/pinholecamera.h include/rendermath.h include/runtimecompiler.h include/shaderwindow.h include/gui/gridscene.h include/gui/mainwindow.h include/gui/qneblock.h include/gui/qneconnection.h include/gui/qneport.h include/gui/qnodeseditor.h include/gui/testglwidget.h include/gui/ui_qnemainwindow.h include/SDFOps/Base_SDFOP.h include/SDFOps/Menger_SDFOP.h $(DISTDIR)/
+	$(COPY_FILE) --parents src/main.cpp src/openglwindow.cpp src/optixscene.cpp src/pinholecamera.cpp src/rendermath.cpp src/runtimecompiler.cpp src/shaderwindow.cpp src/gui/gridscene.cpp src/gui/mainwindow.cpp src/gui/qneblock.cpp src/gui/qneconnection.cpp src/gui/qneport.cpp src/gui/qnodeseditor.cpp src/gui/testglwidget.cpp src/SDFOps/Base_SDFOP.cpp src/SDFOps/Menger_SDFOP.cpp $(DISTDIR)/
 
 
 clean:compiler_clean 
@@ -320,7 +332,7 @@ ptx/block_floor.cu.ptx: /home/tom/src/optix/include/optix.h \
 		/home/tom/src/optix/include/optixu/optixu_aabb_namespace.h \
 		kernel/distance_field.h \
 		kernel/block_floor.cu
-	/usr/local/cuda-7.0/bin/nvcc -m64 -gencode arch=compute_50,code=sm_50 --compiler-options -fno-strict-aliasing -use_fast_math --ptxas-options=-v -ptx -I./include -I./include/gui -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/include -I/usr/local/cuda-7.0/common/inc/ -I/usr/local/cuda-7.0/../shared/inc/ -I/home/tom/src/optix/include  -lpthread -lIlmImf -lHalf -L/usr/local/lib -lcudart -loptix -loptixu -lglut -lsutil -lnvrtc kernel/block_floor.cu -o ptx/block_floor.cu.ptx
+	/usr/local/cuda-7.0/bin/nvcc -m64 -gencode arch=compute_50,code=sm_50 --compiler-options -fno-strict-aliasing -use_fast_math --ptxas-options=-v -ptx -I./include -I./include/gui -I./include/SDFOps -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/include -I/usr/local/cuda-7.0/common/inc/ -I/usr/local/cuda-7.0/../shared/inc/ -I/home/tom/src/optix/include  -lpthread -lIlmImf -lHalf -L/usr/local/lib -lcudart -loptix -loptixu -lglut -lsutil -lnvrtc kernel/block_floor.cu -o ptx/block_floor.cu.ptx
 
 ptx/constantbg.cu.ptx: /home/tom/src/optix/include/optix_world.h \
 		/home/tom/src/optix/include/optix_host.h \
@@ -355,7 +367,7 @@ ptx/constantbg.cu.ptx: /home/tom/src/optix/include/optix_world.h \
 		/home/tom/src/optix/include/optixu/optixu_matrix_namespace.h \
 		/home/tom/src/optix/include/optixu/optixu_math_stream_namespace.h \
 		kernel/constantbg.cu
-	/usr/local/cuda-7.0/bin/nvcc -m64 -gencode arch=compute_50,code=sm_50 --compiler-options -fno-strict-aliasing -use_fast_math --ptxas-options=-v -ptx -I./include -I./include/gui -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/include -I/usr/local/cuda-7.0/common/inc/ -I/usr/local/cuda-7.0/../shared/inc/ -I/home/tom/src/optix/include  -lpthread -lIlmImf -lHalf -L/usr/local/lib -lcudart -loptix -loptixu -lglut -lsutil -lnvrtc kernel/constantbg.cu -o ptx/constantbg.cu.ptx
+	/usr/local/cuda-7.0/bin/nvcc -m64 -gencode arch=compute_50,code=sm_50 --compiler-options -fno-strict-aliasing -use_fast_math --ptxas-options=-v -ptx -I./include -I./include/gui -I./include/SDFOps -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/include -I/usr/local/cuda-7.0/common/inc/ -I/usr/local/cuda-7.0/../shared/inc/ -I/home/tom/src/optix/include  -lpthread -lIlmImf -lHalf -L/usr/local/lib -lcudart -loptix -loptixu -lglut -lsutil -lnvrtc kernel/constantbg.cu -o ptx/constantbg.cu.ptx
 
 ptx/draw.cu.ptx: /home/tom/src/optix/include/optix.h \
 		/home/tom/src/optix/include/optix_device.h \
@@ -378,10 +390,10 @@ ptx/draw.cu.ptx: /home/tom/src/optix/include/optix.h \
 		/usr/local/cuda-7.0/targets/x86_64-linux/include/vector_functions.h \
 		/usr/local/cuda-7.0/targets/x86_64-linux/include/vector_functions.hpp \
 		kernel/draw.cu
-	/usr/local/cuda-7.0/bin/nvcc -m64 -gencode arch=compute_50,code=sm_50 --compiler-options -fno-strict-aliasing -use_fast_math --ptxas-options=-v -ptx -I./include -I./include/gui -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/include -I/usr/local/cuda-7.0/common/inc/ -I/usr/local/cuda-7.0/../shared/inc/ -I/home/tom/src/optix/include  -lpthread -lIlmImf -lHalf -L/usr/local/lib -lcudart -loptix -loptixu -lglut -lsutil -lnvrtc kernel/draw.cu -o ptx/draw.cu.ptx
+	/usr/local/cuda-7.0/bin/nvcc -m64 -gencode arch=compute_50,code=sm_50 --compiler-options -fno-strict-aliasing -use_fast_math --ptxas-options=-v -ptx -I./include -I./include/gui -I./include/SDFOps -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/include -I/usr/local/cuda-7.0/common/inc/ -I/usr/local/cuda-7.0/../shared/inc/ -I/home/tom/src/optix/include  -lpthread -lIlmImf -lHalf -L/usr/local/lib -lcudart -loptix -loptixu -lglut -lsutil -lnvrtc kernel/draw.cu -o ptx/draw.cu.ptx
 
 ptx/functor.cu.ptx: kernel/functor.cu
-	/usr/local/cuda-7.0/bin/nvcc -m64 -gencode arch=compute_50,code=sm_50 --compiler-options -fno-strict-aliasing -use_fast_math --ptxas-options=-v -ptx -I./include -I./include/gui -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/include -I/usr/local/cuda-7.0/common/inc/ -I/usr/local/cuda-7.0/../shared/inc/ -I/home/tom/src/optix/include  -lpthread -lIlmImf -lHalf -L/usr/local/lib -lcudart -loptix -loptixu -lglut -lsutil -lnvrtc kernel/functor.cu -o ptx/functor.cu.ptx
+	/usr/local/cuda-7.0/bin/nvcc -m64 -gencode arch=compute_50,code=sm_50 --compiler-options -fno-strict-aliasing -use_fast_math --ptxas-options=-v -ptx -I./include -I./include/gui -I./include/SDFOps -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/include -I/usr/local/cuda-7.0/common/inc/ -I/usr/local/cuda-7.0/../shared/inc/ -I/home/tom/src/optix/include  -lpthread -lIlmImf -lHalf -L/usr/local/lib -lcudart -loptix -loptixu -lglut -lsutil -lnvrtc kernel/functor.cu -o ptx/functor.cu.ptx
 
 ptx/julia.cu.ptx: /home/tom/src/optix/include/optix.h \
 		/home/tom/src/optix/include/optix_device.h \
@@ -407,7 +419,7 @@ ptx/julia.cu.ptx: /home/tom/src/optix/include/optix.h \
 		/home/tom/src/optix/include/optixu/optixu_aabb_namespace.h \
 		kernel/distance_field.h \
 		kernel/julia.cu
-	/usr/local/cuda-7.0/bin/nvcc -m64 -gencode arch=compute_50,code=sm_50 --compiler-options -fno-strict-aliasing -use_fast_math --ptxas-options=-v -ptx -I./include -I./include/gui -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/include -I/usr/local/cuda-7.0/common/inc/ -I/usr/local/cuda-7.0/../shared/inc/ -I/home/tom/src/optix/include  -lpthread -lIlmImf -lHalf -L/usr/local/lib -lcudart -loptix -loptixu -lglut -lsutil -lnvrtc kernel/julia.cu -o ptx/julia.cu.ptx
+	/usr/local/cuda-7.0/bin/nvcc -m64 -gencode arch=compute_50,code=sm_50 --compiler-options -fno-strict-aliasing -use_fast_math --ptxas-options=-v -ptx -I./include -I./include/gui -I./include/SDFOps -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/include -I/usr/local/cuda-7.0/common/inc/ -I/usr/local/cuda-7.0/../shared/inc/ -I/home/tom/src/optix/include  -lpthread -lIlmImf -lHalf -L/usr/local/lib -lcudart -loptix -loptixu -lglut -lsutil -lnvrtc kernel/julia.cu -o ptx/julia.cu.ptx
 
 ptx/normal_shader.cu.ptx: /home/tom/src/optix/include/optix.h \
 		/home/tom/src/optix/include/optix_device.h \
@@ -430,7 +442,7 @@ ptx/normal_shader.cu.ptx: /home/tom/src/optix/include/optix.h \
 		/usr/local/cuda-7.0/targets/x86_64-linux/include/vector_functions.h \
 		/usr/local/cuda-7.0/targets/x86_64-linux/include/vector_functions.hpp \
 		kernel/normal_shader.cu
-	/usr/local/cuda-7.0/bin/nvcc -m64 -gencode arch=compute_50,code=sm_50 --compiler-options -fno-strict-aliasing -use_fast_math --ptxas-options=-v -ptx -I./include -I./include/gui -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/include -I/usr/local/cuda-7.0/common/inc/ -I/usr/local/cuda-7.0/../shared/inc/ -I/home/tom/src/optix/include  -lpthread -lIlmImf -lHalf -L/usr/local/lib -lcudart -loptix -loptixu -lglut -lsutil -lnvrtc kernel/normal_shader.cu -o ptx/normal_shader.cu.ptx
+	/usr/local/cuda-7.0/bin/nvcc -m64 -gencode arch=compute_50,code=sm_50 --compiler-options -fno-strict-aliasing -use_fast_math --ptxas-options=-v -ptx -I./include -I./include/gui -I./include/SDFOps -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/include -I/usr/local/cuda-7.0/common/inc/ -I/usr/local/cuda-7.0/../shared/inc/ -I/home/tom/src/optix/include  -lpthread -lIlmImf -lHalf -L/usr/local/lib -lcudart -loptix -loptixu -lglut -lsutil -lnvrtc kernel/normal_shader.cu -o ptx/normal_shader.cu.ptx
 
 ptx/pinhole_camera.cu.ptx: /home/tom/src/optix/include/optix_world.h \
 		/home/tom/src/optix/include/optix_host.h \
@@ -466,7 +478,7 @@ ptx/pinhole_camera.cu.ptx: /home/tom/src/optix/include/optix_world.h \
 		/home/tom/src/optix/include/optixu/optixu_math_stream_namespace.h \
 		kernel/helpers.h \
 		kernel/pinhole_camera.cu
-	/usr/local/cuda-7.0/bin/nvcc -m64 -gencode arch=compute_50,code=sm_50 --compiler-options -fno-strict-aliasing -use_fast_math --ptxas-options=-v -ptx -I./include -I./include/gui -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/include -I/usr/local/cuda-7.0/common/inc/ -I/usr/local/cuda-7.0/../shared/inc/ -I/home/tom/src/optix/include  -lpthread -lIlmImf -lHalf -L/usr/local/lib -lcudart -loptix -loptixu -lglut -lsutil -lnvrtc kernel/pinhole_camera.cu -o ptx/pinhole_camera.cu.ptx
+	/usr/local/cuda-7.0/bin/nvcc -m64 -gencode arch=compute_50,code=sm_50 --compiler-options -fno-strict-aliasing -use_fast_math --ptxas-options=-v -ptx -I./include -I./include/gui -I./include/SDFOps -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/include -I/usr/local/cuda-7.0/common/inc/ -I/usr/local/cuda-7.0/../shared/inc/ -I/home/tom/src/optix/include  -lpthread -lIlmImf -lHalf -L/usr/local/lib -lcudart -loptix -loptixu -lglut -lsutil -lnvrtc kernel/pinhole_camera.cu -o ptx/pinhole_camera.cu.ptx
 
 ptx/raymarch.cu.ptx: /home/tom/src/optix/include/optix.h \
 		/home/tom/src/optix/include/optix_device.h \
@@ -492,13 +504,119 @@ ptx/raymarch.cu.ptx: /home/tom/src/optix/include/optix.h \
 		/home/tom/src/optix/include/optixu/optixu_aabb_namespace.h \
 		kernel/distance_field.h \
 		kernel/raymarch.cu
-	/usr/local/cuda-7.0/bin/nvcc -m64 -gencode arch=compute_50,code=sm_50 --compiler-options -fno-strict-aliasing -use_fast_math --ptxas-options=-v -ptx -I./include -I./include/gui -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/include -I/usr/local/cuda-7.0/common/inc/ -I/usr/local/cuda-7.0/../shared/inc/ -I/home/tom/src/optix/include  -lpthread -lIlmImf -lHalf -L/usr/local/lib -lcudart -loptix -loptixu -lglut -lsutil -lnvrtc kernel/raymarch.cu -o ptx/raymarch.cu.ptx
+	/usr/local/cuda-7.0/bin/nvcc -m64 -gencode arch=compute_50,code=sm_50 --compiler-options -fno-strict-aliasing -use_fast_math --ptxas-options=-v -ptx -I./include -I./include/gui -I./include/SDFOps -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/include -I/usr/local/cuda-7.0/common/inc/ -I/usr/local/cuda-7.0/../shared/inc/ -I/home/tom/src/optix/include  -lpthread -lIlmImf -lHalf -L/usr/local/lib -lcudart -loptix -loptixu -lglut -lsutil -lnvrtc kernel/raymarch.cu -o ptx/raymarch.cu.ptx
 
-ptx/raymarch_geo.cu.ptx: kernel/raymarch_geo.cu
-	/usr/local/cuda-7.0/bin/nvcc -m64 -gencode arch=compute_50,code=sm_50 --compiler-options -fno-strict-aliasing -use_fast_math --ptxas-options=-v -ptx -I./include -I./include/gui -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/include -I/usr/local/cuda-7.0/common/inc/ -I/usr/local/cuda-7.0/../shared/inc/ -I/home/tom/src/optix/include  -lpthread -lIlmImf -lHalf -L/usr/local/lib -lcudart -loptix -loptixu -lglut -lsutil -lnvrtc kernel/raymarch_geo.cu -o ptx/raymarch_geo.cu.ptx
+ptx/raymarch_geo.cu.ptx: /usr/local/cuda-7.0/targets/x86_64-linux/include/vector_types.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/builtin_types.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/device_types.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/host_defines.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/driver_types.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/surface_types.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/texture_types.h \
+		kernel/cutil_math.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/cuda_runtime.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/host_config.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/channel_descriptor.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/cuda_runtime_api.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/cuda_device_runtime_api.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/driver_functions.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/vector_functions.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/vector_functions.hpp \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/device_functions.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/device_functions.hpp \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/device_atomic_functions.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/device_atomic_functions.hpp \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/device_double_functions.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/device_double_functions.hpp \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/sm_20_atomic_functions.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/sm_20_atomic_functions.hpp \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/sm_32_atomic_functions.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/sm_32_atomic_functions.hpp \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/sm_35_atomic_functions.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/sm_20_intrinsics.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/sm_20_intrinsics.hpp \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/sm_30_intrinsics.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/sm_30_intrinsics.hpp \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/sm_32_intrinsics.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/sm_32_intrinsics.hpp \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/sm_35_intrinsics.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/surface_functions.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/cuda_surface_types.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/surface_functions.hpp \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/texture_fetch_functions.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/cuda_texture_types.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/texture_fetch_functions.hpp \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/texture_indirect_functions.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/texture_indirect_functions.hpp \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/surface_indirect_functions.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/surface_indirect_functions.hpp \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/common_functions.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/math_functions.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/math_constants.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/device_functions_decls.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/crt/func_macro.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/math_functions.hpp \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/math_functions_dbl_ptx3.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/math_functions_dbl_ptx3.hpp \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/device_launch_parameters.h \
+		kernel/raymarch_geo.cu
+	/usr/local/cuda-7.0/bin/nvcc -m64 -gencode arch=compute_50,code=sm_50 --compiler-options -fno-strict-aliasing -use_fast_math --ptxas-options=-v -ptx -I./include -I./include/gui -I./include/SDFOps -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/include -I/usr/local/cuda-7.0/common/inc/ -I/usr/local/cuda-7.0/../shared/inc/ -I/home/tom/src/optix/include  -lpthread -lIlmImf -lHalf -L/usr/local/lib -lcudart -loptix -loptixu -lglut -lsutil -lnvrtc kernel/raymarch_geo.cu -o ptx/raymarch_geo.cu.ptx
 
-ptx/raymarch_shader.cu.ptx: kernel/raymarch_shader.cu
-	/usr/local/cuda-7.0/bin/nvcc -m64 -gencode arch=compute_50,code=sm_50 --compiler-options -fno-strict-aliasing -use_fast_math --ptxas-options=-v -ptx -I./include -I./include/gui -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/include -I/usr/local/cuda-7.0/common/inc/ -I/usr/local/cuda-7.0/../shared/inc/ -I/home/tom/src/optix/include  -lpthread -lIlmImf -lHalf -L/usr/local/lib -lcudart -loptix -loptixu -lglut -lsutil -lnvrtc kernel/raymarch_shader.cu -o ptx/raymarch_shader.cu.ptx
+ptx/raymarch_shader.cu.ptx: /usr/local/cuda-7.0/targets/x86_64-linux/include/vector_types.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/builtin_types.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/device_types.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/host_defines.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/driver_types.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/surface_types.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/texture_types.h \
+		kernel/cutil_math.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/cuda_runtime.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/host_config.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/channel_descriptor.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/cuda_runtime_api.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/cuda_device_runtime_api.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/driver_functions.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/vector_functions.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/vector_functions.hpp \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/device_functions.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/device_functions.hpp \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/device_atomic_functions.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/device_atomic_functions.hpp \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/device_double_functions.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/device_double_functions.hpp \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/sm_20_atomic_functions.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/sm_20_atomic_functions.hpp \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/sm_32_atomic_functions.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/sm_32_atomic_functions.hpp \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/sm_35_atomic_functions.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/sm_20_intrinsics.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/sm_20_intrinsics.hpp \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/sm_30_intrinsics.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/sm_30_intrinsics.hpp \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/sm_32_intrinsics.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/sm_32_intrinsics.hpp \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/sm_35_intrinsics.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/surface_functions.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/cuda_surface_types.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/surface_functions.hpp \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/texture_fetch_functions.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/cuda_texture_types.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/texture_fetch_functions.hpp \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/texture_indirect_functions.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/texture_indirect_functions.hpp \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/surface_indirect_functions.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/surface_indirect_functions.hpp \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/common_functions.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/math_functions.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/math_constants.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/device_functions_decls.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/crt/func_macro.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/math_functions.hpp \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/math_functions_dbl_ptx3.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/math_functions_dbl_ptx3.hpp \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/device_launch_parameters.h \
+		kernel/raymarch_shader.cu
+	/usr/local/cuda-7.0/bin/nvcc -m64 -gencode arch=compute_50,code=sm_50 --compiler-options -fno-strict-aliasing -use_fast_math --ptxas-options=-v -ptx -I./include -I./include/gui -I./include/SDFOps -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/include -I/usr/local/cuda-7.0/common/inc/ -I/usr/local/cuda-7.0/../shared/inc/ -I/home/tom/src/optix/include  -lpthread -lIlmImf -lHalf -L/usr/local/lib -lcudart -loptix -loptixu -lglut -lsutil -lnvrtc kernel/raymarch_shader.cu -o ptx/raymarch_shader.cu.ptx
 
 ptx/sphere.cu.ptx: /home/tom/src/optix/include/optix_world.h \
 		/home/tom/src/optix/include/optix_host.h \
@@ -533,10 +651,10 @@ ptx/sphere.cu.ptx: /home/tom/src/optix/include/optix_world.h \
 		/home/tom/src/optix/include/optixu/optixu_matrix_namespace.h \
 		/home/tom/src/optix/include/optixu/optixu_math_stream_namespace.h \
 		kernel/sphere.cu
-	/usr/local/cuda-7.0/bin/nvcc -m64 -gencode arch=compute_50,code=sm_50 --compiler-options -fno-strict-aliasing -use_fast_math --ptxas-options=-v -ptx -I./include -I./include/gui -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/include -I/usr/local/cuda-7.0/common/inc/ -I/usr/local/cuda-7.0/../shared/inc/ -I/home/tom/src/optix/include  -lpthread -lIlmImf -lHalf -L/usr/local/lib -lcudart -loptix -loptixu -lglut -lsutil -lnvrtc kernel/sphere.cu -o ptx/sphere.cu.ptx
+	/usr/local/cuda-7.0/bin/nvcc -m64 -gencode arch=compute_50,code=sm_50 --compiler-options -fno-strict-aliasing -use_fast_math --ptxas-options=-v -ptx -I./include -I./include/gui -I./include/SDFOps -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/include -I/usr/local/cuda-7.0/common/inc/ -I/usr/local/cuda-7.0/../shared/inc/ -I/home/tom/src/optix/include  -lpthread -lIlmImf -lHalf -L/usr/local/lib -lcudart -loptix -loptixu -lglut -lsutil -lnvrtc kernel/sphere.cu -o ptx/sphere.cu.ptx
 
 ptx/test.cu.ptx: kernel/test.cu
-	/usr/local/cuda-7.0/bin/nvcc -m64 -gencode arch=compute_50,code=sm_50 --compiler-options -fno-strict-aliasing -use_fast_math --ptxas-options=-v -ptx -I./include -I./include/gui -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/include -I/usr/local/cuda-7.0/common/inc/ -I/usr/local/cuda-7.0/../shared/inc/ -I/home/tom/src/optix/include  -lpthread -lIlmImf -lHalf -L/usr/local/lib -lcudart -loptix -loptixu -lglut -lsutil -lnvrtc kernel/test.cu -o ptx/test.cu.ptx
+	/usr/local/cuda-7.0/bin/nvcc -m64 -gencode arch=compute_50,code=sm_50 --compiler-options -fno-strict-aliasing -use_fast_math --ptxas-options=-v -ptx -I./include -I./include/gui -I./include/SDFOps -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/include -I/usr/local/cuda-7.0/common/inc/ -I/usr/local/cuda-7.0/../shared/inc/ -I/home/tom/src/optix/include  -lpthread -lIlmImf -lHalf -L/usr/local/lib -lcudart -loptix -loptixu -lglut -lsutil -lnvrtc kernel/test.cu -o ptx/test.cu.ptx
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
@@ -544,7 +662,7 @@ compiler_moc_header_make_all: moc/moc_openglwindow.cpp moc/moc_mainwindow.cpp mo
 compiler_moc_header_clean:
 	-$(DEL_FILE) moc/moc_openglwindow.cpp moc/moc_mainwindow.cpp moc/moc_qnodeseditor.cpp
 moc/moc_openglwindow.cpp: include/openglwindow.h
-	/usr/lib64/qt5/bin/moc $(DEFINES) -I/usr/lib64/qt5/mkspecs/linux-clang -I/home/tom/src/Romanesco/QtTest -I/home/tom/src/Romanesco/QtTest/include -I/home/tom/src/Romanesco/QtTest/include/gui -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/include -I/usr/local/cuda-7.0/common/inc -I/usr/local/shared/inc -I/home/tom/src/optix/include -I/usr/include/qt5 -I/usr/include/qt5/QtOpenGL -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I/usr/include/c++/4.9.2 -I/usr/include/c++/4.9.2/x86_64-redhat-linux -I/usr/include/c++/4.9.2/backward -I/usr/lib/gcc/x86_64-redhat-linux/4.9.2/include -I/usr/local/include -I/usr/include include/openglwindow.h -o moc/moc_openglwindow.cpp
+	/usr/lib64/qt5/bin/moc $(DEFINES) -I/usr/lib64/qt5/mkspecs/linux-clang -I/home/tom/src/Romanesco/QtTest -I/home/tom/src/Romanesco/QtTest/include -I/home/tom/src/Romanesco/QtTest/include/gui -I/home/tom/src/Romanesco/QtTest/include/SDFOps -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/include -I/usr/local/cuda-7.0/common/inc -I/usr/local/shared/inc -I/home/tom/src/optix/include -I/usr/include/qt5 -I/usr/include/qt5/QtOpenGL -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I/usr/include/c++/4.9.2 -I/usr/include/c++/4.9.2/x86_64-redhat-linux -I/usr/include/c++/4.9.2/backward -I/usr/lib/gcc/x86_64-redhat-linux/4.9.2/include -I/usr/local/include -I/usr/include include/openglwindow.h -o moc/moc_openglwindow.cpp
 
 moc/moc_mainwindow.cpp: include/gui/testglwidget.h \
 		include/optixscene.h \
@@ -625,10 +743,10 @@ moc/moc_mainwindow.cpp: include/gui/testglwidget.h \
 		/home/tom/src/optix/include/optixu/optixu_matrix_namespace.h \
 		include/commonStructs.h \
 		include/gui/mainwindow.h
-	/usr/lib64/qt5/bin/moc $(DEFINES) -I/usr/lib64/qt5/mkspecs/linux-clang -I/home/tom/src/Romanesco/QtTest -I/home/tom/src/Romanesco/QtTest/include -I/home/tom/src/Romanesco/QtTest/include/gui -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/include -I/usr/local/cuda-7.0/common/inc -I/usr/local/shared/inc -I/home/tom/src/optix/include -I/usr/include/qt5 -I/usr/include/qt5/QtOpenGL -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I/usr/include/c++/4.9.2 -I/usr/include/c++/4.9.2/x86_64-redhat-linux -I/usr/include/c++/4.9.2/backward -I/usr/lib/gcc/x86_64-redhat-linux/4.9.2/include -I/usr/local/include -I/usr/include include/gui/mainwindow.h -o moc/moc_mainwindow.cpp
+	/usr/lib64/qt5/bin/moc $(DEFINES) -I/usr/lib64/qt5/mkspecs/linux-clang -I/home/tom/src/Romanesco/QtTest -I/home/tom/src/Romanesco/QtTest/include -I/home/tom/src/Romanesco/QtTest/include/gui -I/home/tom/src/Romanesco/QtTest/include/SDFOps -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/include -I/usr/local/cuda-7.0/common/inc -I/usr/local/shared/inc -I/home/tom/src/optix/include -I/usr/include/qt5 -I/usr/include/qt5/QtOpenGL -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I/usr/include/c++/4.9.2 -I/usr/include/c++/4.9.2/x86_64-redhat-linux -I/usr/include/c++/4.9.2/backward -I/usr/lib/gcc/x86_64-redhat-linux/4.9.2/include -I/usr/local/include -I/usr/include include/gui/mainwindow.h -o moc/moc_mainwindow.cpp
 
 moc/moc_qnodeseditor.cpp: include/gui/qnodeseditor.h
-	/usr/lib64/qt5/bin/moc $(DEFINES) -I/usr/lib64/qt5/mkspecs/linux-clang -I/home/tom/src/Romanesco/QtTest -I/home/tom/src/Romanesco/QtTest/include -I/home/tom/src/Romanesco/QtTest/include/gui -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/include -I/usr/local/cuda-7.0/common/inc -I/usr/local/shared/inc -I/home/tom/src/optix/include -I/usr/include/qt5 -I/usr/include/qt5/QtOpenGL -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I/usr/include/c++/4.9.2 -I/usr/include/c++/4.9.2/x86_64-redhat-linux -I/usr/include/c++/4.9.2/backward -I/usr/lib/gcc/x86_64-redhat-linux/4.9.2/include -I/usr/local/include -I/usr/include include/gui/qnodeseditor.h -o moc/moc_qnodeseditor.cpp
+	/usr/lib64/qt5/bin/moc $(DEFINES) -I/usr/lib64/qt5/mkspecs/linux-clang -I/home/tom/src/Romanesco/QtTest -I/home/tom/src/Romanesco/QtTest/include -I/home/tom/src/Romanesco/QtTest/include/gui -I/home/tom/src/Romanesco/QtTest/include/SDFOps -I/opt/local/include -I/home/tom/src/optix/SDK/sutil -I/home/tom/src/optix/SDK -I/usr/local/cuda-7.0/include -I/usr/local/cuda-7.0/common/inc -I/usr/local/shared/inc -I/home/tom/src/optix/include -I/usr/include/qt5 -I/usr/include/qt5/QtOpenGL -I/usr/include/qt5/QtWidgets -I/usr/include/qt5/QtGui -I/usr/include/qt5/QtCore -I/usr/include/c++/4.9.2 -I/usr/include/c++/4.9.2/x86_64-redhat-linux -I/usr/include/c++/4.9.2/backward -I/usr/lib/gcc/x86_64-redhat-linux/4.9.2/include -I/usr/local/include -I/usr/include include/gui/qnodeseditor.h -o moc/moc_qnodeseditor.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -724,8 +842,7 @@ obj/main.o: src/main.cpp include/gui/mainwindow.h \
 		/home/tom/src/optix/include/optixu/optixu_matrix_namespace.h \
 		include/commonStructs.h \
 		include/shaderwindow.h \
-		include/openglwindow.h \
-		/usr/local/cuda-7.0/targets/x86_64-linux/include/nvrtc.h
+		include/openglwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/main.o src/main.cpp
 
 obj/openglwindow.o: src/openglwindow.cpp include/openglwindow.h
@@ -846,6 +963,11 @@ obj/pinholecamera.o: src/pinholecamera.cpp include/pinholecamera.h \
 
 obj/rendermath.o: src/rendermath.cpp include/rendermath.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/rendermath.o src/rendermath.cpp
+
+obj/runtimecompiler.o: src/runtimecompiler.cpp include/runtimecompiler.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/cuda.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/nvrtc.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/runtimecompiler.o src/runtimecompiler.cpp
 
 obj/shaderwindow.o: src/shaderwindow.cpp /home/tom/src/optix/include/optixu/optixu_math_namespace.h \
 		/home/tom/src/optix/include/optix.h \
@@ -1115,6 +1237,12 @@ obj/testglwidget.o: src/gui/testglwidget.cpp include/gui/testglwidget.h \
 		include/commonStructs.h \
 		include/rendermath.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/testglwidget.o src/gui/testglwidget.cpp
+
+obj/Base_SDFOP.o: src/SDFOps/Base_SDFOP.cpp include/SDFOps/Base_SDFOP.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Base_SDFOP.o src/SDFOps/Base_SDFOP.cpp
+
+obj/Menger_SDFOP.o: src/SDFOps/Menger_SDFOP.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Menger_SDFOP.o src/SDFOps/Menger_SDFOP.cpp
 
 obj/moc_openglwindow.o: moc/moc_openglwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/moc_openglwindow.o moc/moc_openglwindow.cpp

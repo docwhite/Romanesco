@@ -22,20 +22,22 @@ QT+=gui opengl core
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-#FORMS    += ui/mainwindow.ui
-
 # Whatever sources you want in your program
 SOURCES += src/*.cpp \
-           src/gui/*.cpp
+           src/gui/*.cpp \
+           src/SDFOps/*.cpp
  
 # Whatever headers you want in your program
 HEADERS += include/*.h \
-           include/gui/*.h
+           include/gui/*.h \
+           include/SDFOps/*.h
 
 OTHER_FILES += shaders/*
 
 INCLUDEPATH += ./include
 INCLUDEPATH += ./include/gui
+INCLUDEPATH += ./include/SDFOps
+
 INCLUDEPATH += /opt/local/include
 #Whatever libs you want in your program
 DESTDIR=./

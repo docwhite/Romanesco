@@ -100,4 +100,18 @@
 	ret;
 }
 
+	// .globl	distancehit_hook
+.visible .func  (.param .b32 func_retval0) distancehit_hook(
+	.param .align 4 .b8 distancehit_hook_param_0[12],
+	.param .b32 distancehit_hook_param_1
+)
+{
+	.reg .f32 	%f<2>;
+
+
+	mov.f32 	%f1, 0fBF800000;
+	st.param.f32	[func_retval0+0], %f1;
+	ret;
+}
+
 
