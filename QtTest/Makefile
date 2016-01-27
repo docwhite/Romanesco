@@ -63,8 +63,24 @@ SOURCES       = src/main.cpp \
 		src/gui/qnodeseditor.cpp \
 		src/gui/testglwidget.cpp \
 		src/SDFOps/Base_SDFOP.cpp \
+		src/SDFOps/Bend_SDFOP.cpp \
+		src/SDFOps/Blend_SDFOP.cpp \
+		src/SDFOps/Box_SDFOP.cpp \
+		src/SDFOps/Capsule_SDFOP.cpp \
+		src/SDFOps/Cone_SDFOP.cpp \
+		src/SDFOps/Cylinder_SDFOP.cpp \
+		src/SDFOps/Displace_SDFOP.cpp \
+		src/SDFOps/Intersection_SDFOP.cpp \
 		src/SDFOps/Mandelbulb_SDFOP.cpp \
-		src/SDFOps/Menger_SDFOP.cpp moc/moc_openglwindow.cpp \
+		src/SDFOps/Menger_SDFOP.cpp \
+		src/SDFOps/Repetition_SDFOP.cpp \
+		src/SDFOps/Scale_SDFOP.cpp \
+		src/SDFOps/Sphere_SDFOP.cpp \
+		src/SDFOps/Subtraction_SDFOP.cpp \
+		src/SDFOps/Torus_SDFOP.cpp \
+		src/SDFOps/Transform_SDFOP.cpp \
+		src/SDFOps/Twist_SDFOP.cpp \
+		src/SDFOps/Union_SDFOP.cpp moc/moc_openglwindow.cpp \
 		moc/moc_mainwindow.cpp \
 		moc/moc_qnodeseditor.cpp
 OBJECTS       = obj/main.o \
@@ -82,8 +98,24 @@ OBJECTS       = obj/main.o \
 		obj/qnodeseditor.o \
 		obj/testglwidget.o \
 		obj/Base_SDFOP.o \
+		obj/Bend_SDFOP.o \
+		obj/Blend_SDFOP.o \
+		obj/Box_SDFOP.o \
+		obj/Capsule_SDFOP.o \
+		obj/Cone_SDFOP.o \
+		obj/Cylinder_SDFOP.o \
+		obj/Displace_SDFOP.o \
+		obj/Intersection_SDFOP.o \
 		obj/Mandelbulb_SDFOP.o \
 		obj/Menger_SDFOP.o \
+		obj/Repetition_SDFOP.o \
+		obj/Scale_SDFOP.o \
+		obj/Sphere_SDFOP.o \
+		obj/Subtraction_SDFOP.o \
+		obj/Torus_SDFOP.o \
+		obj/Transform_SDFOP.o \
+		obj/Twist_SDFOP.o \
+		obj/Union_SDFOP.o \
 		obj/moc_openglwindow.o \
 		obj/moc_mainwindow.o \
 		obj/moc_qnodeseditor.o
@@ -103,8 +135,24 @@ DIST          = optixqt.pro include/commonStructs.h \
 		include/gui/testglwidget.h \
 		include/gui/ui_qnemainwindow.h \
 		include/SDFOps/Base_SDFOP.h \
+		include/SDFOps/Bend_SDFOP.h \
+		include/SDFOps/Blend_SDFOP.h \
+		include/SDFOps/Box_SDFOP.h \
+		include/SDFOps/Capsule_SDFOP.h \
+		include/SDFOps/Cone_SDFOP.h \
+		include/SDFOps/Cylinder_SDFOP.h \
+		include/SDFOps/Displace_SDFOP.h \
+		include/SDFOps/Intersection_SDFOP.h \
 		include/SDFOps/Mandelbulb_SDFOP.h \
-		include/SDFOps/Menger_SDFOP.h src/main.cpp \
+		include/SDFOps/Menger_SDFOP.h \
+		include/SDFOps/Repetition_SDFOP.h \
+		include/SDFOps/Scale_SDFOP.h \
+		include/SDFOps/Sphere_SDFOP.h \
+		include/SDFOps/Subtraction_SDFOP.h \
+		include/SDFOps/Torus_SDFOP.h \
+		include/SDFOps/Transform_SDFOP.h \
+		include/SDFOps/Twist_SDFOP.h \
+		include/SDFOps/Union_SDFOP.h src/main.cpp \
 		src/openglwindow.cpp \
 		src/optixscene.cpp \
 		src/pinholecamera.cpp \
@@ -119,8 +167,24 @@ DIST          = optixqt.pro include/commonStructs.h \
 		src/gui/qnodeseditor.cpp \
 		src/gui/testglwidget.cpp \
 		src/SDFOps/Base_SDFOP.cpp \
+		src/SDFOps/Bend_SDFOP.cpp \
+		src/SDFOps/Blend_SDFOP.cpp \
+		src/SDFOps/Box_SDFOP.cpp \
+		src/SDFOps/Capsule_SDFOP.cpp \
+		src/SDFOps/Cone_SDFOP.cpp \
+		src/SDFOps/Cylinder_SDFOP.cpp \
+		src/SDFOps/Displace_SDFOP.cpp \
+		src/SDFOps/Intersection_SDFOP.cpp \
 		src/SDFOps/Mandelbulb_SDFOP.cpp \
-		src/SDFOps/Menger_SDFOP.cpp
+		src/SDFOps/Menger_SDFOP.cpp \
+		src/SDFOps/Repetition_SDFOP.cpp \
+		src/SDFOps/Scale_SDFOP.cpp \
+		src/SDFOps/Sphere_SDFOP.cpp \
+		src/SDFOps/Subtraction_SDFOP.cpp \
+		src/SDFOps/Torus_SDFOP.cpp \
+		src/SDFOps/Transform_SDFOP.cpp \
+		src/SDFOps/Twist_SDFOP.cpp \
+		src/SDFOps/Union_SDFOP.cpp
 QMAKE_TARGET  = optixqt
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = optixqt
@@ -287,8 +351,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents kernel/block_floor.cu kernel/constantbg.cu kernel/draw.cu kernel/functor.cu kernel/julia.cu kernel/normal_shader.cu kernel/pinhole_camera.cu kernel/raymarch.cu kernel/raymarch_geo.cu kernel/raymarch_shader.cu kernel/sphere.cu kernel/test.cu $(DISTDIR)/
-	$(COPY_FILE) --parents include/commonStructs.h include/openglwindow.h include/optixscene.h include/pinholecamera.h include/rendermath.h include/runtimecompiler.h include/shaderwindow.h include/gui/gridscene.h include/gui/mainwindow.h include/gui/qneblock.h include/gui/qneconnection.h include/gui/qneport.h include/gui/qnodeseditor.h include/gui/testglwidget.h include/gui/ui_qnemainwindow.h include/SDFOps/Base_SDFOP.h include/SDFOps/Mandelbulb_SDFOP.h include/SDFOps/Menger_SDFOP.h $(DISTDIR)/
-	$(COPY_FILE) --parents src/main.cpp src/openglwindow.cpp src/optixscene.cpp src/pinholecamera.cpp src/rendermath.cpp src/runtimecompiler.cpp src/shaderwindow.cpp src/gui/gridscene.cpp src/gui/mainwindow.cpp src/gui/qneblock.cpp src/gui/qneconnection.cpp src/gui/qneport.cpp src/gui/qnodeseditor.cpp src/gui/testglwidget.cpp src/SDFOps/Base_SDFOP.cpp src/SDFOps/Mandelbulb_SDFOP.cpp src/SDFOps/Menger_SDFOP.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents include/commonStructs.h include/openglwindow.h include/optixscene.h include/pinholecamera.h include/rendermath.h include/runtimecompiler.h include/shaderwindow.h include/gui/gridscene.h include/gui/mainwindow.h include/gui/qneblock.h include/gui/qneconnection.h include/gui/qneport.h include/gui/qnodeseditor.h include/gui/testglwidget.h include/gui/ui_qnemainwindow.h include/SDFOps/Base_SDFOP.h include/SDFOps/Bend_SDFOP.h include/SDFOps/Blend_SDFOP.h include/SDFOps/Box_SDFOP.h include/SDFOps/Capsule_SDFOP.h include/SDFOps/Cone_SDFOP.h include/SDFOps/Cylinder_SDFOP.h include/SDFOps/Displace_SDFOP.h include/SDFOps/Intersection_SDFOP.h include/SDFOps/Mandelbulb_SDFOP.h include/SDFOps/Menger_SDFOP.h include/SDFOps/Repetition_SDFOP.h include/SDFOps/Scale_SDFOP.h include/SDFOps/Sphere_SDFOP.h include/SDFOps/Subtraction_SDFOP.h include/SDFOps/Torus_SDFOP.h include/SDFOps/Transform_SDFOP.h include/SDFOps/Twist_SDFOP.h include/SDFOps/Union_SDFOP.h $(DISTDIR)/
+	$(COPY_FILE) --parents src/main.cpp src/openglwindow.cpp src/optixscene.cpp src/pinholecamera.cpp src/rendermath.cpp src/runtimecompiler.cpp src/shaderwindow.cpp src/gui/gridscene.cpp src/gui/mainwindow.cpp src/gui/qneblock.cpp src/gui/qneconnection.cpp src/gui/qneport.cpp src/gui/qnodeseditor.cpp src/gui/testglwidget.cpp src/SDFOps/Base_SDFOP.cpp src/SDFOps/Bend_SDFOP.cpp src/SDFOps/Blend_SDFOP.cpp src/SDFOps/Box_SDFOP.cpp src/SDFOps/Capsule_SDFOP.cpp src/SDFOps/Cone_SDFOP.cpp src/SDFOps/Cylinder_SDFOP.cpp src/SDFOps/Displace_SDFOP.cpp src/SDFOps/Intersection_SDFOP.cpp src/SDFOps/Mandelbulb_SDFOP.cpp src/SDFOps/Menger_SDFOP.cpp src/SDFOps/Repetition_SDFOP.cpp src/SDFOps/Scale_SDFOP.cpp src/SDFOps/Sphere_SDFOP.cpp src/SDFOps/Subtraction_SDFOP.cpp src/SDFOps/Torus_SDFOP.cpp src/SDFOps/Transform_SDFOP.cpp src/SDFOps/Twist_SDFOP.cpp src/SDFOps/Union_SDFOP.cpp $(DISTDIR)/
 
 
 clean:compiler_clean 
@@ -929,7 +993,9 @@ obj/optixscene.o: src/optixscene.cpp include/optixscene.h \
 		/home/tom/src/optix/SDK/sutil/Mouse.h \
 		/home/tom/src/optix/include/optixu/optixu_matrix_namespace.h \
 		include/commonStructs.h \
-		/home/tom/src/optix/SDK/sutil/ImageLoader.h
+		/home/tom/src/optix/SDK/sutil/ImageLoader.h \
+		include/runtimecompiler.h \
+		/usr/local/cuda-7.0/targets/x86_64-linux/include/nvrtc.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/optixscene.o src/optixscene.cpp
 
 obj/pinholecamera.o: src/pinholecamera.cpp include/pinholecamera.h \
@@ -1245,11 +1311,77 @@ obj/testglwidget.o: src/gui/testglwidget.cpp include/gui/testglwidget.h \
 obj/Base_SDFOP.o: src/SDFOps/Base_SDFOP.cpp include/SDFOps/Base_SDFOP.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Base_SDFOP.o src/SDFOps/Base_SDFOP.cpp
 
-obj/Mandelbulb_SDFOP.o: src/SDFOps/Mandelbulb_SDFOP.cpp include/SDFOps/Mandelbulb_SDFOP.h
+obj/Bend_SDFOP.o: src/SDFOps/Bend_SDFOP.cpp include/SDFOps/Bend_SDFOP.h \
+		include/SDFOps/Base_SDFOP.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Bend_SDFOP.o src/SDFOps/Bend_SDFOP.cpp
+
+obj/Blend_SDFOP.o: src/SDFOps/Blend_SDFOP.cpp include/SDFOps/Blend_SDFOP.h \
+		include/SDFOps/Base_SDFOP.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Blend_SDFOP.o src/SDFOps/Blend_SDFOP.cpp
+
+obj/Box_SDFOP.o: src/SDFOps/Box_SDFOP.cpp include/SDFOps/Box_SDFOP.h \
+		include/SDFOps/Base_SDFOP.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Box_SDFOP.o src/SDFOps/Box_SDFOP.cpp
+
+obj/Capsule_SDFOP.o: src/SDFOps/Capsule_SDFOP.cpp include/SDFOps/Capsule_SDFOP.h \
+		include/SDFOps/Base_SDFOP.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Capsule_SDFOP.o src/SDFOps/Capsule_SDFOP.cpp
+
+obj/Cone_SDFOP.o: src/SDFOps/Cone_SDFOP.cpp include/SDFOps/Cone_SDFOP.h \
+		include/SDFOps/Base_SDFOP.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Cone_SDFOP.o src/SDFOps/Cone_SDFOP.cpp
+
+obj/Cylinder_SDFOP.o: src/SDFOps/Cylinder_SDFOP.cpp include/SDFOps/Cylinder_SDFOP.h \
+		include/SDFOps/Base_SDFOP.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Cylinder_SDFOP.o src/SDFOps/Cylinder_SDFOP.cpp
+
+obj/Displace_SDFOP.o: src/SDFOps/Displace_SDFOP.cpp include/SDFOps/Displace_SDFOP.h \
+		include/SDFOps/Base_SDFOP.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Displace_SDFOP.o src/SDFOps/Displace_SDFOP.cpp
+
+obj/Intersection_SDFOP.o: src/SDFOps/Intersection_SDFOP.cpp include/SDFOps/Intersection_SDFOP.h \
+		include/SDFOps/Base_SDFOP.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Intersection_SDFOP.o src/SDFOps/Intersection_SDFOP.cpp
+
+obj/Mandelbulb_SDFOP.o: src/SDFOps/Mandelbulb_SDFOP.cpp include/SDFOps/Mandelbulb_SDFOP.h \
+		include/SDFOps/Base_SDFOP.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Mandelbulb_SDFOP.o src/SDFOps/Mandelbulb_SDFOP.cpp
 
-obj/Menger_SDFOP.o: src/SDFOps/Menger_SDFOP.cpp include/SDFOps/Menger_SDFOP.h
+obj/Menger_SDFOP.o: src/SDFOps/Menger_SDFOP.cpp include/SDFOps/Menger_SDFOP.h \
+		include/SDFOps/Base_SDFOP.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Menger_SDFOP.o src/SDFOps/Menger_SDFOP.cpp
+
+obj/Repetition_SDFOP.o: src/SDFOps/Repetition_SDFOP.cpp include/SDFOps/Repetition_SDFOP.h \
+		include/SDFOps/Base_SDFOP.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Repetition_SDFOP.o src/SDFOps/Repetition_SDFOP.cpp
+
+obj/Scale_SDFOP.o: src/SDFOps/Scale_SDFOP.cpp include/SDFOps/Scale_SDFOP.h \
+		include/SDFOps/Base_SDFOP.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Scale_SDFOP.o src/SDFOps/Scale_SDFOP.cpp
+
+obj/Sphere_SDFOP.o: src/SDFOps/Sphere_SDFOP.cpp include/SDFOps/Sphere_SDFOP.h \
+		include/SDFOps/Base_SDFOP.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Sphere_SDFOP.o src/SDFOps/Sphere_SDFOP.cpp
+
+obj/Subtraction_SDFOP.o: src/SDFOps/Subtraction_SDFOP.cpp include/SDFOps/Subtraction_SDFOP.h \
+		include/SDFOps/Base_SDFOP.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Subtraction_SDFOP.o src/SDFOps/Subtraction_SDFOP.cpp
+
+obj/Torus_SDFOP.o: src/SDFOps/Torus_SDFOP.cpp include/SDFOps/Torus_SDFOP.h \
+		include/SDFOps/Base_SDFOP.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Torus_SDFOP.o src/SDFOps/Torus_SDFOP.cpp
+
+obj/Transform_SDFOP.o: src/SDFOps/Transform_SDFOP.cpp include/SDFOps/Transform_SDFOP.h \
+		include/SDFOps/Base_SDFOP.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Transform_SDFOP.o src/SDFOps/Transform_SDFOP.cpp
+
+obj/Twist_SDFOP.o: src/SDFOps/Twist_SDFOP.cpp include/SDFOps/Twist_SDFOP.h \
+		include/SDFOps/Base_SDFOP.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Twist_SDFOP.o src/SDFOps/Twist_SDFOP.cpp
+
+obj/Union_SDFOP.o: src/SDFOps/Union_SDFOP.cpp include/SDFOps/Union_SDFOP.h \
+		include/SDFOps/Base_SDFOP.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Union_SDFOP.o src/SDFOps/Union_SDFOP.cpp
 
 obj/moc_openglwindow.o: moc/moc_openglwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/moc_openglwindow.o moc/moc_openglwindow.cpp
