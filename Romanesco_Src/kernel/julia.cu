@@ -403,30 +403,30 @@ RT_PROGRAM void julia_ch_radiance()
 
   //if( prd_radiance.depth < 5 )
   //if( prd_radiance.depth < 5 )
-  {
-      PerRayData_radiance new_prd;
-      new_prd.importance = prd_radiance.importance;
-      new_prd.depth = prd_radiance.depth + 1;
-      new_prd.result = make_float3(1,0,0);
+//  {
+//      PerRayData_radiance new_prd;
+//      new_prd.importance = prd_radiance.importance;
+//      new_prd.depth = prd_radiance.depth + 1;
+//      new_prd.result = make_float3(1,0,0);
 
-      float3 refl = make_float3(0,0,0);
-      refl = reflect( ray.direction, normal );
-      const optix::Ray refl_ray = optix::make_Ray( p, refl, 0, 1e-3f, RT_DEFAULT_MAX );
-      rtTrace( top_object, refl_ray, new_prd );
+//      float3 refl = make_float3(0,0,0);
+//      refl = reflect( ray.direction, normal );
+//      const optix::Ray refl_ray = optix::make_Ray( p, refl, 0, 1e-3f, RT_DEFAULT_MAX );
+//      rtTrace( top_object, refl_ray, new_prd );
 
-      PerRayData_radiance new_prd2;
-      new_prd2.importance = prd_radiance.importance;
-      new_prd2.depth = prd_radiance.depth + 1;
-      new_prd2.result = make_float3(1,0,0);
+//      PerRayData_radiance new_prd2;
+//      new_prd2.importance = prd_radiance.importance;
+//      new_prd2.depth = prd_radiance.depth + 1;
+//      new_prd2.result = make_float3(1,0,0);
 
-      float3 refr = make_float3(0,0,0);
-      refract( refr, ray.direction, normal, 1.3);
-      const optix::Ray refr_ray = optix::make_Ray( p, refr, 0, 1e-3f, RT_DEFAULT_MAX );
-      rtTrace( top_object, refr_ray, new_prd2 );
+//      float3 refr = make_float3(0,0,0);
+//      refract( refr, ray.direction, normal, 1.3);
+//      const optix::Ray refr_ray = optix::make_Ray( p, refr, 0, 1e-3f, RT_DEFAULT_MAX );
+//      rtTrace( top_object, refr_ray, new_prd2 );
 
-      //result = (red * occlusion) + new_prd.result;
-      result =  lerp(new_prd.result + new_prd2.result, result, 0.05);//lerp( new_prd.result * occlusion, result, 0 );
-  }
+//      //result = (red * occlusion) + new_prd.result;
+//      result =  lerp(new_prd.result + new_prd2.result, result, 0.05);//lerp( new_prd.result * occlusion, result, 0 );
+//  }
 
   prd_radiance.result = result;
   prd_radiance.result_nrm = normal;//normalize( rtTransformNormal(RT_OBJECT_TO_WORLD, normal) )*0.5f + 0.5f;
