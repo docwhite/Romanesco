@@ -1,52 +1,5 @@
-This is BibTeX, Version 0.99d (TeX Live 2014)
-Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
-The top-level auxiliary file: report.aux
-The style file: plain-annote.bst
-Database file #1: bib_icereport.bib
-Warning--to sort, need author or key in superquad
-Warning--to sort, need author or key in angel
-Warning--to sort, need author or key in prman
-Warning--to sort, need author or key in rmdocs
-Warning--can't use both author and editor fields in Apodaca:1999:ARC:555371
-You've used 18 entries,
-            2163 wiz_defined-function locations,
-            627 strings with 8676 characters,
-and the built_in function-call counts, 6856 in all, are:
-= -- 701
-> -- 294
-< -- 8
-+ -- 123
-- -- 100
-* -- 473
-:= -- 1035
-add.period$ -- 64
-call.type$ -- 18
-change.case$ -- 102
-chr.to.int$ -- 0
-cite$ -- 23
-duplicate$ -- 283
-empty$ -- 565
-format.name$ -- 100
-if$ -- 1527
-int.to.chr$ -- 0
-int.to.str$ -- 18
-missing$ -- 17
-newline$ -- 97
-num.names$ -- 28
-pop$ -- 139
-preamble$ -- 1
-purify$ -- 86
-quote$ -- 0
-skip$ -- 206
-stack$ -- 0
-substring$ -- 369
-swap$ -- 87
-text.length$ -- 8
-text.prefix$ -- 0
-top$ -- 0
-type$ -- 66
-warning$ -- 5
-while$ -- 54
-width$ -- 20
-write$ -- 239
-(There were 5 warnings)
+[0] Config.pm:327> INFO - This is Biber 2.3
+[0] Config.pm:330> INFO - Logfile is 'report.blg'
+[25] biber:287> INFO - === Wed Mar  9, 2016, 04:15:21
+[97] Utils.pm:163> ERROR - Cannot find control file 'report.bcf'! - did you pass the "backend=biber" option to BibLaTeX?
+[98] Biber.pm:111> INFO - ERRORS: 1

@@ -1,9 +1,7 @@
 \contentsline {chapter}{Initial Research}{2}
 \contentsline {section}{\numberline {1.1}Trying out existing stuff}{2}
-\contentsline {section}{\numberline {1.2}Render Tests}{4}
-\contentsline {section}{\numberline {1.3}Reading the documentation and tutorials}{4}
-\contentsline {chapter}{Production}{5}
-\contentsline {section}{\numberline {2.1}Initial Tests}{5}
-\contentsline {section}{\numberline {2.2}Results}{5}
-\contentsline {section}{\numberline {2.3}Unforeseen Problems}{5}
-\contentsline {chapter}{Conclusion}{6}
+\contentsline {subsection}{\numberline {1.1.1}Fractals in FX Software}{2}
+\contentsline {section}{\numberline {1.2}Reading the documentation and tutorials}{2}
+\contentsline {chapter}{Pipeline}{3}
+\contentsline {chapter}{Renderer}{4}
+\contentsline {chapter}{Conclusion}{5}
