@@ -10,7 +10,8 @@
 
 .extern .func  (.param .b32 func_retval0) distancehit_hook
 (
-	.param .align 4 .b8 distancehit_hook_param_0[12]
+	.param .align 4 .b8 distancehit_hook_param_0[12],
+	.param .b64 distancehit_hook_param_1
 )
 ;
 .global .align 4 .b8 eye[12];
@@ -27,6 +28,7 @@
 .global .align 8 .b8 normal[12];
 .global .align 4 .b8 shading_normal[12];
 .global .align 4 .b8 shading_normal2[12];
+.global .align 1 .b8 test[1];
 .global .align 8 .b8 top_object[4];
 .global .align 4 .f32 isect_t;
 .global .align 8 .b8 prd_radiance[52];
@@ -299,29 +301,29 @@
 )
 {
 	.reg .pred 	%p<14>;
-	.reg .s32 	%r<9>;
+	.reg .s32 	%r<23>;
 	.reg .f32 	%f<99>;
-	.reg .s64 	%rd<7>;
+	.reg .s64 	%rd<50>;
 
 
-	mov.u32 	%r8, 0;
-	st.global.u32 	[normal+8], %r8;
+	mov.u32 	%r22, 0;
+	st.global.u32 	[normal+8], %r22;
 	mov.f32 	%f97, 0f00000000;
 	st.global.v2.f32 	[normal], {%f97, %f97};
 	ldu.global.f32 	%f32, [center];
 	ldu.global.f32 	%f1, [ray];
 	sub.ftz.f32 	%f33, %f1, %f32;
-	mov.u64 	%rd1, center;
-	add.s64 	%rd2, %rd1, 4;
-	ldu.global.f32 	%f34, [%rd2];
-	mov.u64 	%rd3, ray;
-	add.s64 	%rd4, %rd3, 4;
-	ldu.global.f32 	%f2, [%rd4];
+	mov.u64 	%rd2, center;
+	add.s64 	%rd3, %rd2, 4;
+	ldu.global.f32 	%f34, [%rd3];
+	mov.u64 	%rd4, ray;
+	add.s64 	%rd5, %rd4, 4;
+	ldu.global.f32 	%f2, [%rd5];
 	sub.ftz.f32 	%f35, %f2, %f34;
-	add.s64 	%rd5, %rd1, 8;
-	ldu.global.f32 	%f36, [%rd5];
-	add.s64 	%rd6, %rd3, 8;
-	ldu.global.f32 	%f3, [%rd6];
+	add.s64 	%rd6, %rd2, 8;
+	ldu.global.f32 	%f36, [%rd6];
+	add.s64 	%rd7, %rd4, 8;
+	ldu.global.f32 	%f3, [%rd7];
 	sub.ftz.f32 	%f37, %f3, %f36;
 	ld.global.f32 	%f6, [ray+20];
 	ld.global.f32 	%f4, [ray+12];
@@ -361,11 +363,18 @@ BB4_3:
 	fma.rn.ftz.f32 	%f93, %f4, %f96, %f1;
 	fma.rn.ftz.f32 	%f94, %f5, %f96, %f2;
 	fma.rn.ftz.f32 	%f95, %f6, %f96, %f3;
+	cvta.global.u64 	%rd1, test;
 
 BB4_4:
-	setp.gt.s32	%p6, %r8, 799;
+	setp.gt.s32	%p6, %r22, 799;
 	@%p6 bra 	BB4_6;
 
+	mov.u32 	%r5, 1;
+	mov.u32 	%r6, 12;
+	mov.u64 	%rd13, 0;
+	// inline asm
+	call (%rd8), _rt_buffer_get_64, (%rd1, %r5, %r6, %rd13, %rd13, %rd13, %rd13);
+	// inline asm
 	// Callseq Start 0
 	{
 	.reg .b32 temp_param_reg;
@@ -373,11 +382,14 @@ BB4_4:
 	st.param.f32	[param0+0], %f93;
 	st.param.f32	[param0+4], %f94;
 	st.param.f32	[param0+8], %f95;
+	.param .b64 param1;
+	st.param.b64	[param1+0], %rd8;
 	.param .b32 retval0;
 	call.uni (retval0), 
 	distancehit_hook, 
 	(
-	param0
+	param0, 
+	param1
 	);
 	ld.param.f32	%f97, [retval0+0];
 	}
@@ -389,7 +401,7 @@ BB4_4:
 	setp.lt.ftz.f32	%p7, %f97, 0f3A83126F;
 	setp.gt.ftz.f32	%p8, %f96, %f98;
 	or.pred  	%p9, %p7, %p8;
-	add.s32 	%r8, %r8, 1;
+	add.s32 	%r22, %r22, 1;
 	@!%p9 bra 	BB4_4;
 	bra.uni 	BB4_6;
 
@@ -398,15 +410,21 @@ BB4_6:
 	@%p10 bra 	BB4_9;
 
 	// inline asm
-	call (%r5), _rt_potential_intersection, (%f96);
+	call (%r7), _rt_potential_intersection, (%f96);
 	// inline asm
-	setp.eq.s32	%p11, %r5, 0;
+	setp.eq.s32	%p11, %r7, 0;
 	@%p11 bra 	BB4_9;
 
 	ld.global.f32 	%f52, [DEL];
 	add.ftz.f32 	%f53, %f93, %f52;
 	add.ftz.f32 	%f54, %f94, 0f00000000;
 	add.ftz.f32 	%f55, %f95, 0f00000000;
+	mov.u32 	%r18, 1;
+	mov.u32 	%r19, 12;
+	mov.u64 	%rd49, 0;
+	// inline asm
+	call (%rd14), _rt_buffer_get_64, (%rd1, %r18, %r19, %rd49, %rd49, %rd49, %rd49);
+	// inline asm
 	// Callseq Start 1
 	{
 	.reg .b32 temp_param_reg;
@@ -414,20 +432,26 @@ BB4_6:
 	st.param.f32	[param0+0], %f53;
 	st.param.f32	[param0+4], %f54;
 	st.param.f32	[param0+8], %f55;
+	.param .b64 param1;
+	st.param.b64	[param1+0], %rd14;
 	.param .b32 retval0;
 	call.uni (retval0), 
 	distancehit_hook, 
 	(
-	param0
+	param0, 
+	param1
 	);
 	ld.param.f32	%f56, [retval0+0];
 	}
 	// Callseq End 1
-	mov.u32 	%r7, 0;
+	mov.u32 	%r21, 0;
 	ld.global.f32 	%f57, [DEL];
 	sub.ftz.f32 	%f58, %f93, %f57;
 	add.ftz.f32 	%f59, %f94, 0f80000000;
 	add.ftz.f32 	%f60, %f95, 0f80000000;
+	// inline asm
+	call (%rd20), _rt_buffer_get_64, (%rd1, %r18, %r19, %rd49, %rd49, %rd49, %rd49);
+	// inline asm
 	// Callseq Start 2
 	{
 	.reg .b32 temp_param_reg;
@@ -435,11 +459,14 @@ BB4_6:
 	st.param.f32	[param0+0], %f58;
 	st.param.f32	[param0+4], %f59;
 	st.param.f32	[param0+8], %f60;
+	.param .b64 param1;
+	st.param.b64	[param1+0], %rd20;
 	.param .b32 retval0;
 	call.uni (retval0), 
 	distancehit_hook, 
 	(
-	param0
+	param0, 
+	param1
 	);
 	ld.param.f32	%f61, [retval0+0];
 	}
@@ -448,6 +475,9 @@ BB4_6:
 	ld.global.f32 	%f63, [DEL];
 	add.ftz.f32 	%f64, %f94, %f63;
 	add.ftz.f32 	%f65, %f93, 0f00000000;
+	// inline asm
+	call (%rd26), _rt_buffer_get_64, (%rd1, %r18, %r19, %rd49, %rd49, %rd49, %rd49);
+	// inline asm
 	// Callseq Start 3
 	{
 	.reg .b32 temp_param_reg;
@@ -455,11 +485,14 @@ BB4_6:
 	st.param.f32	[param0+0], %f65;
 	st.param.f32	[param0+4], %f64;
 	st.param.f32	[param0+8], %f55;
+	.param .b64 param1;
+	st.param.b64	[param1+0], %rd26;
 	.param .b32 retval0;
 	call.uni (retval0), 
 	distancehit_hook, 
 	(
-	param0
+	param0, 
+	param1
 	);
 	ld.param.f32	%f66, [retval0+0];
 	}
@@ -467,6 +500,9 @@ BB4_6:
 	ld.global.f32 	%f67, [DEL];
 	sub.ftz.f32 	%f68, %f94, %f67;
 	add.ftz.f32 	%f69, %f93, 0f80000000;
+	// inline asm
+	call (%rd32), _rt_buffer_get_64, (%rd1, %r18, %r19, %rd49, %rd49, %rd49, %rd49);
+	// inline asm
 	// Callseq Start 4
 	{
 	.reg .b32 temp_param_reg;
@@ -474,11 +510,14 @@ BB4_6:
 	st.param.f32	[param0+0], %f69;
 	st.param.f32	[param0+4], %f68;
 	st.param.f32	[param0+8], %f60;
+	.param .b64 param1;
+	st.param.b64	[param1+0], %rd32;
 	.param .b32 retval0;
 	call.uni (retval0), 
 	distancehit_hook, 
 	(
-	param0
+	param0, 
+	param1
 	);
 	ld.param.f32	%f70, [retval0+0];
 	}
@@ -486,6 +525,9 @@ BB4_6:
 	sub.ftz.f32 	%f71, %f66, %f70;
 	ld.global.f32 	%f72, [DEL];
 	add.ftz.f32 	%f73, %f95, %f72;
+	// inline asm
+	call (%rd38), _rt_buffer_get_64, (%rd1, %r18, %r19, %rd49, %rd49, %rd49, %rd49);
+	// inline asm
 	// Callseq Start 5
 	{
 	.reg .b32 temp_param_reg;
@@ -493,17 +535,23 @@ BB4_6:
 	st.param.f32	[param0+0], %f65;
 	st.param.f32	[param0+4], %f54;
 	st.param.f32	[param0+8], %f73;
+	.param .b64 param1;
+	st.param.b64	[param1+0], %rd38;
 	.param .b32 retval0;
 	call.uni (retval0), 
 	distancehit_hook, 
 	(
-	param0
+	param0, 
+	param1
 	);
 	ld.param.f32	%f74, [retval0+0];
 	}
 	// Callseq End 5
 	ld.global.f32 	%f75, [DEL];
 	sub.ftz.f32 	%f76, %f95, %f75;
+	// inline asm
+	call (%rd44), _rt_buffer_get_64, (%rd1, %r18, %r19, %rd49, %rd49, %rd49, %rd49);
+	// inline asm
 	// Callseq Start 6
 	{
 	.reg .b32 temp_param_reg;
@@ -511,11 +559,14 @@ BB4_6:
 	st.param.f32	[param0+0], %f69;
 	st.param.f32	[param0+4], %f59;
 	st.param.f32	[param0+8], %f76;
+	.param .b64 param1;
+	st.param.b64	[param1+0], %rd44;
 	.param .b32 retval0;
 	call.uni (retval0), 
 	distancehit_hook, 
 	(
-	param0
+	param0, 
+	param1
 	);
 	ld.param.f32	%f77, [retval0+0];
 	}
@@ -532,7 +583,7 @@ BB4_6:
 	st.global.v2.f32 	[normal], {%f86, %f85};
 	st.global.f32 	[normal+8], %f84;
 	// inline asm
-	call (%r6), _rt_report_intersection, (%r7);
+	call (%r20), _rt_report_intersection, (%r21);
 	// inline asm
 
 BB4_9:
@@ -565,34 +616,42 @@ BB4_9:
 
 )
 {
+	.reg .s32 	%r<9>;
 	.reg .f32 	%f<110>;
-	.reg .s64 	%rd<9>;
+	.reg .s64 	%rd<33>;
 
 
 	ldu.global.f32 	%f1, [isect_t];
-	mov.u64 	%rd1, ray;
-	add.s64 	%rd2, %rd1, 12;
-	ldu.global.f32 	%f2, [%rd2];
-	add.s64 	%rd3, %rd1, 16;
-	ldu.global.f32 	%f3, [%rd3];
-	add.s64 	%rd4, %rd1, 20;
-	ldu.global.f32 	%f4, [%rd4];
+	mov.u64 	%rd25, ray;
+	add.s64 	%rd26, %rd25, 12;
+	ldu.global.f32 	%f2, [%rd26];
+	add.s64 	%rd27, %rd25, 16;
+	ldu.global.f32 	%f3, [%rd27];
+	add.s64 	%rd28, %rd25, 20;
+	ldu.global.f32 	%f4, [%rd28];
 	ldu.global.f32 	%f5, [ray];
-	add.s64 	%rd5, %rd1, 4;
-	ldu.global.f32 	%f6, [%rd5];
-	add.s64 	%rd6, %rd1, 8;
-	ldu.global.f32 	%f7, [%rd6];
+	add.s64 	%rd29, %rd25, 4;
+	ldu.global.f32 	%f6, [%rd29];
+	add.s64 	%rd30, %rd25, 8;
+	ldu.global.f32 	%f7, [%rd30];
 	fma.rn.ftz.f32 	%f8, %f4, %f1, %f7;
+	cvta.global.u64 	%rd20, test;
 	mov.f32 	%f9, 0f00000000;
 	ldu.global.v2.f32 	{%f10, %f11}, [normal];
-	mov.u64 	%rd7, normal;
-	add.s64 	%rd8, %rd7, 8;
-	ldu.global.f32 	%f12, [%rd8];
+	mov.u64 	%rd31, normal;
+	add.s64 	%rd32, %rd31, 8;
+	ldu.global.f32 	%f12, [%rd32];
 	fma.rn.ftz.f32 	%f13, %f2, %f1, %f5;
 	fma.rn.ftz.f32 	%f15, %f10, 0f00000000, %f13;
 	fma.rn.ftz.f32 	%f16, %f3, %f1, %f6;
 	fma.rn.ftz.f32 	%f18, %f11, 0f00000000, %f16;
 	fma.rn.ftz.f32 	%f19, %f12, 0f00000000, %f8;
+	mov.u32 	%r7, 1;
+	mov.u32 	%r8, 12;
+	mov.u64 	%rd24, 0;
+	// inline asm
+	call (%rd1), _rt_buffer_get_64, (%rd20, %r7, %r8, %rd24, %rd24, %rd24, %rd24);
+	// inline asm
 	// Callseq Start 7
 	{
 	.reg .b32 temp_param_reg;
@@ -600,11 +659,14 @@ BB4_9:
 	st.param.f32	[param0+0], %f15;
 	st.param.f32	[param0+4], %f18;
 	st.param.f32	[param0+8], %f19;
+	.param .b64 param1;
+	st.param.b64	[param1+0], %rd1;
 	.param .b32 retval0;
 	call.uni (retval0), 
 	distancehit_hook, 
 	(
-	param0
+	param0, 
+	param1
 	);
 	ld.param.f32	%f20, [retval0+0];
 	}
@@ -618,6 +680,9 @@ BB4_9:
 	fma.rn.ftz.f32 	%f29, %f25, 0f3D4CCCCD, %f13;
 	fma.rn.ftz.f32 	%f31, %f26, 0f3D4CCCCD, %f16;
 	fma.rn.ftz.f32 	%f32, %f27, 0f3D4CCCCD, %f8;
+	// inline asm
+	call (%rd7), _rt_buffer_get_64, (%rd20, %r7, %r8, %rd24, %rd24, %rd24, %rd24);
+	// inline asm
 	// Callseq Start 8
 	{
 	.reg .b32 temp_param_reg;
@@ -625,11 +690,14 @@ BB4_9:
 	st.param.f32	[param0+0], %f29;
 	st.param.f32	[param0+4], %f31;
 	st.param.f32	[param0+8], %f32;
+	.param .b64 param1;
+	st.param.b64	[param1+0], %rd7;
 	.param .b32 retval0;
 	call.uni (retval0), 
 	distancehit_hook, 
 	(
-	param0
+	param0, 
+	param1
 	);
 	ld.param.f32	%f33, [retval0+0];
 	}
@@ -642,6 +710,9 @@ BB4_9:
 	fma.rn.ftz.f32 	%f41, %f37, 0f3DCCCCCD, %f13;
 	fma.rn.ftz.f32 	%f43, %f38, 0f3DCCCCCD, %f16;
 	fma.rn.ftz.f32 	%f44, %f39, 0f3DCCCCCD, %f8;
+	// inline asm
+	call (%rd13), _rt_buffer_get_64, (%rd20, %r7, %r8, %rd24, %rd24, %rd24, %rd24);
+	// inline asm
 	// Callseq Start 9
 	{
 	.reg .b32 temp_param_reg;
@@ -649,11 +720,14 @@ BB4_9:
 	st.param.f32	[param0+0], %f41;
 	st.param.f32	[param0+4], %f43;
 	st.param.f32	[param0+8], %f44;
+	.param .b64 param1;
+	st.param.b64	[param1+0], %rd13;
 	.param .b32 retval0;
 	call.uni (retval0), 
 	distancehit_hook, 
 	(
-	param0
+	param0, 
+	param1
 	);
 	ld.param.f32	%f45, [retval0+0];
 	}
@@ -666,6 +740,9 @@ BB4_9:
 	fma.rn.ftz.f32 	%f53, %f49, 0f3E19999A, %f13;
 	fma.rn.ftz.f32 	%f55, %f50, 0f3E19999A, %f16;
 	fma.rn.ftz.f32 	%f56, %f51, 0f3E19999A, %f8;
+	// inline asm
+	call (%rd19), _rt_buffer_get_64, (%rd20, %r7, %r8, %rd24, %rd24, %rd24, %rd24);
+	// inline asm
 	// Callseq Start 10
 	{
 	.reg .b32 temp_param_reg;
@@ -673,11 +750,14 @@ BB4_9:
 	st.param.f32	[param0+0], %f53;
 	st.param.f32	[param0+4], %f55;
 	st.param.f32	[param0+8], %f56;
+	.param .b64 param1;
+	st.param.b64	[param1+0], %rd19;
 	.param .b32 retval0;
 	call.uni (retval0), 
 	distancehit_hook, 
 	(
-	param0
+	param0, 
+	param1
 	);
 	ld.param.f32	%f57, [retval0+0];
 	}
