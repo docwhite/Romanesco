@@ -1,8 +1,0 @@
-#ifndef MACROHELPERS_H
-#define MACROHELPERS_H
-
-#define STRINGIZE_(x) #x
-#define MACROTOSTRING(x) STRINGIZE_(x)
-
-#endif // MACROHELPERS_H
-
