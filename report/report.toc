@@ -4,4 +4,7 @@
 \contentsline {section}{\numberline {1.2}Reading the documentation and tutorials}{2}
 \contentsline {chapter}{Pipeline}{3}
 \contentsline {chapter}{Renderer}{4}
-\contentsline {chapter}{Conclusion}{5}
+\contentsline {section}{\numberline {3.1}Scene Management - Code Reflection}{4}
+\contentsline {subsection}{\numberline {3.1.1}PTX Patching}{4}
+\contentsline {subsection}{\numberline {3.1.2}Optix Callable Programs}{5}
+\contentsline {chapter}{Conclusion}{6}
