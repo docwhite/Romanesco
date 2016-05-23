@@ -11,15 +11,15 @@
 .address_size 64
 
 	// .globl	_Z7degreesf
+.global .align 1 .b8 output_buffer[1];
+.global .align 1 .b8 output_buffer_nrm[1];
+.global .align 1 .b8 output_buffer_world[1];
+.global .align 1 .b8 output_buffer_depth[1];
 .global .align 8 .b8 eye[12];
-.global .align 16 .b8 c4[16];
 .global .align 4 .f32 alpha;
 .global .align 4 .f32 delta;
 .global .align 4 .f32 DEL;
-.global .align 4 .f32 color_t;
 .global .align 4 .u32 max_iterations;
-.global .align 4 .b8 particle[12];
-.global .align 4 .b8 center[12];
 .global .align 4 .f32 global_t;
 .global .align 8 .b8 ray[36];
 .global .align 8 .b8 normal[12];
@@ -28,10 +28,6 @@
 .global .align 8 .b8 shading_normal[12];
 .global .align 4 .b8 shading_normal2[12];
 .global .align 8 .b8 geometric_normal[12];
-.global .align 1 .b8 output_buffer[1];
-.global .align 1 .b8 output_buffer_nrm[1];
-.global .align 1 .b8 output_buffer_world[1];
-.global .align 1 .b8 output_buffer_depth[1];
 .global .align 8 .b8 launch_index[8];
 .global .align 8 .b8 launch_dim[8];
 .global .align 4 .b8 normalmatrix[64];
@@ -83,14 +79,10 @@
 .global .align 4 .u32 _ZN21rti_internal_register14reg_rayIndex_zE;
 .global .align 4 .f32 time_view_scale = 0f358637BD;
 .global .align 4 .b8 _ZN21rti_internal_typeinfo3eyeE[8] = {82, 97, 121, 0, 12, 0, 0, 0};
-.global .align 4 .b8 _ZN21rti_internal_typeinfo2c4E[8] = {82, 97, 121, 0, 16, 0, 0, 0};
 .global .align 4 .b8 _ZN21rti_internal_typeinfo5alphaE[8] = {82, 97, 121, 0, 4, 0, 0, 0};
 .global .align 4 .b8 _ZN21rti_internal_typeinfo5deltaE[8] = {82, 97, 121, 0, 4, 0, 0, 0};
 .global .align 4 .b8 _ZN21rti_internal_typeinfo3DELE[8] = {82, 97, 121, 0, 4, 0, 0, 0};
-.global .align 4 .b8 _ZN21rti_internal_typeinfo7color_tE[8] = {82, 97, 121, 0, 4, 0, 0, 0};
 .global .align 4 .b8 _ZN21rti_internal_typeinfo14max_iterationsE[8] = {82, 97, 121, 0, 4, 0, 0, 0};
-.global .align 4 .b8 _ZN21rti_internal_typeinfo8particleE[8] = {82, 97, 121, 0, 12, 0, 0, 0};
-.global .align 4 .b8 _ZN21rti_internal_typeinfo6centerE[8] = {82, 97, 121, 0, 12, 0, 0, 0};
 .global .align 4 .b8 _ZN21rti_internal_typeinfo8global_tE[8] = {82, 97, 121, 0, 4, 0, 0, 0};
 .global .align 4 .b8 _ZN21rti_internal_typeinfo3rayE[8] = {82, 97, 121, 0, 36, 0, 0, 0};
 .global .align 4 .b8 _ZN21rti_internal_typeinfo6normalE[8] = {82, 97, 121, 0, 12, 0, 0, 0};
@@ -124,14 +116,10 @@
 .global .align 4 .b8 _ZN21rti_internal_typeinfo13diffuse_colorE[8] = {82, 97, 121, 0, 12, 0, 0, 0};
 .global .align 4 .b8 _ZN21rti_internal_typeinfo7do_workE[8] = {82, 97, 121, 0, 4, 0, 0, 0};
 .global .align 1 .b8 _ZN21rti_internal_typename3eyeE[7] = {102, 108, 111, 97, 116, 51, 0};
-.global .align 1 .b8 _ZN21rti_internal_typename2c4E[7] = {102, 108, 111, 97, 116, 52, 0};
 .global .align 1 .b8 _ZN21rti_internal_typename5alphaE[6] = {102, 108, 111, 97, 116, 0};
 .global .align 1 .b8 _ZN21rti_internal_typename5deltaE[6] = {102, 108, 111, 97, 116, 0};
 .global .align 1 .b8 _ZN21rti_internal_typename3DELE[6] = {102, 108, 111, 97, 116, 0};
-.global .align 1 .b8 _ZN21rti_internal_typename7color_tE[6] = {102, 108, 111, 97, 116, 0};
 .global .align 1 .b8 _ZN21rti_internal_typename14max_iterationsE[5] = {117, 105, 110, 116, 0};
-.global .align 1 .b8 _ZN21rti_internal_typename8particleE[7] = {102, 108, 111, 97, 116, 51, 0};
-.global .align 1 .b8 _ZN21rti_internal_typename6centerE[7] = {102, 108, 111, 97, 116, 51, 0};
 .global .align 1 .b8 _ZN21rti_internal_typename8global_tE[6] = {102, 108, 111, 97, 116, 0};
 .global .align 1 .b8 _ZN21rti_internal_typename3rayE[11] = {111, 112, 116, 105, 120, 58, 58, 82, 97, 121, 0};
 .global .align 1 .b8 _ZN21rti_internal_typename6normalE[7] = {102, 108, 111, 97, 116, 51, 0};
@@ -165,14 +153,10 @@
 .global .align 1 .b8 _ZN21rti_internal_typename13diffuse_colorE[7] = {102, 108, 111, 97, 116, 51, 0};
 .global .align 1 .b8 _ZN21rti_internal_typename7do_workE[6] = {99, 97, 108, 108, 84, 0};
 .global .align 4 .u32 _ZN21rti_internal_typeenum3eyeE = 4919;
-.global .align 4 .u32 _ZN21rti_internal_typeenum2c4E = 4919;
 .global .align 4 .u32 _ZN21rti_internal_typeenum5alphaE = 4919;
 .global .align 4 .u32 _ZN21rti_internal_typeenum5deltaE = 4919;
 .global .align 4 .u32 _ZN21rti_internal_typeenum3DELE = 4919;
-.global .align 4 .u32 _ZN21rti_internal_typeenum7color_tE = 4919;
 .global .align 4 .u32 _ZN21rti_internal_typeenum14max_iterationsE = 4919;
-.global .align 4 .u32 _ZN21rti_internal_typeenum8particleE = 4919;
-.global .align 4 .u32 _ZN21rti_internal_typeenum6centerE = 4919;
 .global .align 4 .u32 _ZN21rti_internal_typeenum8global_tE = 4919;
 .global .align 4 .u32 _ZN21rti_internal_typeenum3rayE = 4919;
 .global .align 4 .u32 _ZN21rti_internal_typeenum6normalE = 4919;
@@ -206,14 +190,10 @@
 .global .align 4 .u32 _ZN21rti_internal_typeenum13diffuse_colorE = 4919;
 .global .align 4 .u32 _ZN21rti_internal_typeenum7do_workE = 4921;
 .global .align 1 .b8 _ZN21rti_internal_semantic3eyeE[1];
-.global .align 1 .b8 _ZN21rti_internal_semantic2c4E[1];
 .global .align 1 .b8 _ZN21rti_internal_semantic5alphaE[1];
 .global .align 1 .b8 _ZN21rti_internal_semantic5deltaE[1];
 .global .align 1 .b8 _ZN21rti_internal_semantic3DELE[1];
-.global .align 1 .b8 _ZN21rti_internal_semantic7color_tE[1];
 .global .align 1 .b8 _ZN21rti_internal_semantic14max_iterationsE[1];
-.global .align 1 .b8 _ZN21rti_internal_semantic8particleE[1];
-.global .align 1 .b8 _ZN21rti_internal_semantic6centerE[1];
 .global .align 1 .b8 _ZN21rti_internal_semantic8global_tE[1];
 .global .align 1 .b8 _ZN21rti_internal_semantic3rayE[13] = {114, 116, 67, 117, 114, 114, 101, 110, 116, 82, 97, 121, 0};
 .global .align 1 .b8 _ZN21rti_internal_semantic6normalE[17] = {97, 116, 116, 114, 105, 98, 117, 116, 101, 32, 110, 111, 114, 109, 97, 108, 0};
@@ -247,14 +227,10 @@
 .global .align 1 .b8 _ZN21rti_internal_semantic13diffuse_colorE[1];
 .global .align 1 .b8 _ZN21rti_internal_semantic7do_workE[1];
 .global .align 1 .b8 _ZN23rti_internal_annotation3eyeE[1];
-.global .align 1 .b8 _ZN23rti_internal_annotation2c4E[1];
 .global .align 1 .b8 _ZN23rti_internal_annotation5alphaE[1];
 .global .align 1 .b8 _ZN23rti_internal_annotation5deltaE[1];
 .global .align 1 .b8 _ZN23rti_internal_annotation3DELE[1];
-.global .align 1 .b8 _ZN23rti_internal_annotation7color_tE[1];
 .global .align 1 .b8 _ZN23rti_internal_annotation14max_iterationsE[1];
-.global .align 1 .b8 _ZN23rti_internal_annotation8particleE[1];
-.global .align 1 .b8 _ZN23rti_internal_annotation6centerE[1];
 .global .align 1 .b8 _ZN23rti_internal_annotation8global_tE[1];
 .global .align 1 .b8 _ZN23rti_internal_annotation3rayE[1];
 .global .align 1 .b8 _ZN23rti_internal_annotation6normalE[1];
