@@ -4570,7 +4570,7 @@ BB22_6:
 
 BB22_4:
 	ld.global.u32 	%r4, [current_prd+96];
-	setp.gt.s32	%p7, %r4, 6;
+	setp.gt.s32	%p7, %r4, 2;
 	@%p7 bra 	BB22_7;
 
 	mov.f32 	%f284, 0f4B800000;
