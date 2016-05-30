@@ -5289,6 +5289,17 @@ BB30_5:
 	ret;
 }
 
+	// .globl	_ZN5optix6MatrixILj4ELj2EEC2Ev
+.visible .func _ZN5optix6MatrixILj4ELj2EEC2Ev(
+	.param .b64 _ZN5optix6MatrixILj4ELj2EEC2Ev_param_0
+)
+{
+
+
+
+	ret;
+}
+
 	// .globl	_ZN5optix22boundCallableProgramIdIF6float3vEEC2Ev
 .visible .func _ZN5optix22boundCallableProgramIdIF6float3vEEC2Ev(
 	.param .b64 _ZN5optix22boundCallableProgramIdIF6float3vEEC2Ev_param_0
