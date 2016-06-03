@@ -1011,58 +1011,58 @@ BB8_5:
 {
 	.reg .pred 	%p<27>;
 	.reg .s32 	%r<33>;
-	.reg .f32 	%f<157>;
+	.reg .f32 	%f<158>;
 	.reg .s64 	%rd<12>;
 
 
 	mov.u32 	%r32, 0;
 	st.global.u32 	[normal+8], %r32;
-	mov.f32 	%f151, 0f00000000;
-	st.global.v2.f32 	[normal], {%f151, %f151};
+	mov.f32 	%f152, 0f00000000;
+	st.global.v2.f32 	[normal], {%f152, %f152};
 	ld.global.f32 	%f3, [ray+8];
-	ld.global.v2.f32 	{%f64, %f65}, [ray];
-	add.ftz.f32 	%f66, %f64, 0f80000000;
-	add.ftz.f32 	%f67, %f65, 0f80000000;
-	add.ftz.f32 	%f68, %f3, 0f80000000;
-	mul.ftz.f32 	%f69, %f67, %f67;
-	fma.rn.ftz.f32 	%f70, %f66, %f66, %f69;
-	fma.rn.ftz.f32 	%f71, %f68, %f68, %f70;
-	sqrt.approx.ftz.f32 	%f72, %f71;
-	setp.gtu.ftz.f32	%p2, %f72, 0f41200000;
+	ld.global.v2.f32 	{%f75, %f76}, [ray];
+	add.ftz.f32 	%f77, %f75, 0f80000000;
+	add.ftz.f32 	%f78, %f76, 0f80000000;
+	add.ftz.f32 	%f79, %f3, 0f80000000;
+	mul.ftz.f32 	%f80, %f78, %f78;
+	fma.rn.ftz.f32 	%f81, %f77, %f77, %f80;
+	fma.rn.ftz.f32 	%f82, %f79, %f79, %f81;
+	sqrt.approx.ftz.f32 	%f83, %f82;
+	setp.gtu.ftz.f32	%p2, %f83, 0f41200000;
 	@%p2 bra 	BB9_2;
 
 	mov.pred 	%p26, 0;
-	mov.f32 	%f150, 0f6C4ECB8F;
+	mov.f32 	%f151, 0f6C4ECB8F;
 	bra.uni 	BB9_5;
 
 BB9_2:
-	ld.global.f32 	%f75, [ray+20];
-	ld.global.f32 	%f76, [ray+12];
-	ld.global.f32 	%f77, [ray+16];
-	mul.ftz.f32 	%f78, %f65, %f77;
-	fma.rn.ftz.f32 	%f79, %f64, %f76, %f78;
-	fma.rn.ftz.f32 	%f4, %f3, %f75, %f79;
-	mul.ftz.f32 	%f80, %f65, %f65;
-	fma.rn.ftz.f32 	%f81, %f64, %f64, %f80;
-	fma.rn.ftz.f32 	%f82, %f3, %f3, %f81;
-	add.ftz.f32 	%f83, %f82, 0fC2C80000;
-	mul.ftz.f32 	%f84, %f4, %f4;
-	sub.ftz.f32 	%f5, %f84, %f83;
+	ld.global.f32 	%f86, [ray+20];
+	ld.global.f32 	%f87, [ray+12];
+	ld.global.f32 	%f88, [ray+16];
+	mul.ftz.f32 	%f89, %f76, %f88;
+	fma.rn.ftz.f32 	%f90, %f75, %f87, %f89;
+	fma.rn.ftz.f32 	%f4, %f3, %f86, %f90;
+	mul.ftz.f32 	%f91, %f76, %f76;
+	fma.rn.ftz.f32 	%f92, %f75, %f75, %f91;
+	fma.rn.ftz.f32 	%f93, %f3, %f3, %f92;
+	add.ftz.f32 	%f94, %f93, 0fC2C80000;
+	mul.ftz.f32 	%f95, %f4, %f4;
+	sub.ftz.f32 	%f5, %f95, %f94;
 	setp.gt.ftz.f32	%p4, %f5, 0f00000000;
 	@%p4 bra 	BB9_4;
 
 	mov.pred 	%p26, -1;
-	mov.f32 	%f86, 0f00000000;
-	mov.f32 	%f150, %f86;
+	mov.f32 	%f97, 0f00000000;
+	mov.f32 	%f151, %f97;
 	bra.uni 	BB9_5;
 
 BB9_4:
-	sqrt.approx.ftz.f32 	%f87, %f5;
-	neg.ftz.f32 	%f88, %f4;
-	sub.ftz.f32 	%f151, %f88, %f87;
-	sub.ftz.f32 	%f89, %f87, %f4;
-	setp.gt.ftz.f32	%p7, %f151, %f89;
-	selp.f32	%f150, %f151, %f89, %p7;
+	sqrt.approx.ftz.f32 	%f98, %f5;
+	neg.ftz.f32 	%f99, %f4;
+	sub.ftz.f32 	%f152, %f99, %f98;
+	sub.ftz.f32 	%f100, %f98, %f4;
+	setp.gt.ftz.f32	%p7, %f152, %f100;
+	selp.f32	%f151, %f152, %f100, %p7;
 	mov.pred 	%p26, 0;
 
 BB9_5:
@@ -1071,31 +1071,31 @@ BB9_5:
 	ld.global.f32 	%f12, [ray+20];
 	ld.global.f32 	%f11, [ray+16];
 	ld.global.f32 	%f10, [ray+12];
-	fma.rn.ftz.f32 	%f154, %f10, %f151, %f64;
-	fma.rn.ftz.f32 	%f153, %f11, %f151, %f65;
-	fma.rn.ftz.f32 	%f152, %f12, %f151, %f3;
-	mov.f32 	%f156, 0f60AD78EC;
+	fma.rn.ftz.f32 	%f155, %f10, %f152, %f75;
+	fma.rn.ftz.f32 	%f154, %f11, %f152, %f76;
+	fma.rn.ftz.f32 	%f153, %f12, %f152, %f3;
+	mov.f32 	%f157, 0f501502F9;
 	// inline asm
-	prototype_0 : .callprototype (.param .b32 _) _ (.param .align 4 .b8 _[12], .param .b32 _, .param .b32 _);
-	// inline asm
-	// inline asm
-	prototype_1 : .callprototype (.param .b32 _) _ (.param .align 4 .b8 _[12], .param .b32 _, .param .b32 _);
+	prototype_0 : .callprototype (.param .align 8 .b8 _[8]) _ (.param .align 4 .b8 _[12], .param .b32 _, .param .b32 _);
 	// inline asm
 	// inline asm
-	prototype_2 : .callprototype (.param .b32 _) _ (.param .align 4 .b8 _[12], .param .b32 _, .param .b32 _);
+	prototype_1 : .callprototype (.param .align 8 .b8 _[8]) _ (.param .align 4 .b8 _[12], .param .b32 _, .param .b32 _);
 	// inline asm
 	// inline asm
-	prototype_3 : .callprototype (.param .b32 _) _ (.param .align 4 .b8 _[12], .param .b32 _, .param .b32 _);
+	prototype_2 : .callprototype (.param .align 8 .b8 _[8]) _ (.param .align 4 .b8 _[12], .param .b32 _, .param .b32 _);
 	// inline asm
 	// inline asm
-	prototype_4 : .callprototype (.param .b32 _) _ (.param .align 4 .b8 _[12], .param .b32 _, .param .b32 _);
+	prototype_3 : .callprototype (.param .align 8 .b8 _[8]) _ (.param .align 4 .b8 _[12], .param .b32 _, .param .b32 _);
+	// inline asm
+	// inline asm
+	prototype_4 : .callprototype (.param .align 8 .b8 _[8]) _ (.param .align 4 .b8 _[12], .param .b32 _, .param .b32 _);
 	// inline asm
 
 BB9_7:
 	mov.u32 	%r30, %r32;
 	mov.u32 	%r1, %r30;
 	ld.global.u32 	%r11, [max_iterations];
-	ld.global.f32 	%f91, [global_t];
+	ld.global.f32 	%f102, [global_t];
 	ld.global.u32 	%r10, [do_work];
 	// inline asm
 	call (%rd1), _rt_callable_program_from_id_64, (%r10);
@@ -1104,14 +1104,14 @@ BB9_7:
 	{
 	.reg .b32 temp_param_reg;
 	.param .align 4 .b8 param0[12];
-	st.param.f32	[param0+0], %f154;
-	st.param.f32	[param0+4], %f153;
-	st.param.f32	[param0+8], %f152;
+	st.param.f32	[param0+0], %f155;
+	st.param.f32	[param0+4], %f154;
+	st.param.f32	[param0+8], %f153;
 	.param .b32 param1;
 	st.param.b32	[param1+0], %r11;
 	.param .b32 param2;
-	st.param.f32	[param2+0], %f91;
-	.param .b32 retval0;
+	st.param.f32	[param2+0], %f102;
+	.param .align 8 .b8 retval0[8];
 	call (retval0), 
 	%rd1, 
 	(
@@ -1120,26 +1120,24 @@ BB9_7:
 	param2
 	)
 	, prototype_0;
-	ld.param.f32	%f155, [retval0+0];
+	ld.param.f32	%f156, [retval0+0];
+	ld.param.f32	%f22, [retval0+4];
 	}
 	// Callseq End 0
-	fma.rn.ftz.f32 	%f154, %f10, %f155, %f154;
-	fma.rn.ftz.f32 	%f153, %f11, %f155, %f153;
-	fma.rn.ftz.f32 	%f152, %f12, %f155, %f152;
-	fma.rn.ftz.f32 	%f151, %f155, 0f3F7D70A4, %f151;
-	setp.lt.ftz.f32	%p8, %f155, 0f3A83126F;
-	setp.gt.ftz.f32	%p9, %f151, %f150;
+	fma.rn.ftz.f32 	%f155, %f10, %f156, %f155;
+	fma.rn.ftz.f32 	%f154, %f11, %f156, %f154;
+	fma.rn.ftz.f32 	%f153, %f12, %f156, %f153;
+	fma.rn.ftz.f32 	%f152, %f156, 0f3F7D70A4, %f152;
+	setp.lt.ftz.f32	%p8, %f156, 0f3A83126F;
+	setp.gt.ftz.f32	%p9, %f152, %f151;
 	or.pred  	%p10, %p8, %p9;
 	mov.u32 	%r31, %r1;
 	@%p10 bra 	BB9_13;
 
-	add.ftz.f32 	%f92, %f154, 0fBF000000;
-	mul.ftz.f32 	%f93, %f153, %f153;
-	fma.rn.ftz.f32 	%f94, %f92, %f92, %f93;
-	fma.rn.ftz.f32 	%f156, %f152, %f152, %f94;
+	min.ftz.f32 	%f157, %f157, %f22;
 	add.s32 	%r2, %r1, 1;
 	ld.global.u32 	%r13, [max_iterations];
-	ld.global.f32 	%f95, [global_t];
+	ld.global.f32 	%f103, [global_t];
 	ld.global.u32 	%r12, [do_work];
 	// inline asm
 	call (%rd2), _rt_callable_program_from_id_64, (%r12);
@@ -1148,14 +1146,14 @@ BB9_7:
 	{
 	.reg .b32 temp_param_reg;
 	.param .align 4 .b8 param0[12];
-	st.param.f32	[param0+0], %f154;
-	st.param.f32	[param0+4], %f153;
-	st.param.f32	[param0+8], %f152;
+	st.param.f32	[param0+0], %f155;
+	st.param.f32	[param0+4], %f154;
+	st.param.f32	[param0+8], %f153;
 	.param .b32 param1;
 	st.param.b32	[param1+0], %r13;
 	.param .b32 param2;
-	st.param.f32	[param2+0], %f95;
-	.param .b32 retval0;
+	st.param.f32	[param2+0], %f103;
+	.param .align 8 .b8 retval0[8];
 	call (retval0), 
 	%rd2, 
 	(
@@ -1164,26 +1162,24 @@ BB9_7:
 	param2
 	)
 	, prototype_1;
-	ld.param.f32	%f155, [retval0+0];
+	ld.param.f32	%f156, [retval0+0];
+	ld.param.f32	%f30, [retval0+4];
 	}
 	// Callseq End 1
-	fma.rn.ftz.f32 	%f154, %f10, %f155, %f154;
-	fma.rn.ftz.f32 	%f153, %f11, %f155, %f153;
-	fma.rn.ftz.f32 	%f152, %f12, %f155, %f152;
-	fma.rn.ftz.f32 	%f151, %f155, 0f3F7D70A4, %f151;
-	setp.lt.ftz.f32	%p11, %f155, 0f3A83126F;
-	setp.gt.ftz.f32	%p12, %f151, %f150;
+	fma.rn.ftz.f32 	%f155, %f10, %f156, %f155;
+	fma.rn.ftz.f32 	%f154, %f11, %f156, %f154;
+	fma.rn.ftz.f32 	%f153, %f12, %f156, %f153;
+	fma.rn.ftz.f32 	%f152, %f156, 0f3F7D70A4, %f152;
+	setp.lt.ftz.f32	%p11, %f156, 0f3A83126F;
+	setp.gt.ftz.f32	%p12, %f152, %f151;
 	or.pred  	%p13, %p11, %p12;
 	mov.u32 	%r31, %r2;
 	@%p13 bra 	BB9_13;
 
-	add.ftz.f32 	%f96, %f154, 0fBF000000;
-	mul.ftz.f32 	%f97, %f153, %f153;
-	fma.rn.ftz.f32 	%f98, %f96, %f96, %f97;
-	fma.rn.ftz.f32 	%f156, %f152, %f152, %f98;
+	min.ftz.f32 	%f157, %f157, %f30;
 	add.s32 	%r3, %r1, 2;
 	ld.global.u32 	%r15, [max_iterations];
-	ld.global.f32 	%f99, [global_t];
+	ld.global.f32 	%f104, [global_t];
 	ld.global.u32 	%r14, [do_work];
 	// inline asm
 	call (%rd3), _rt_callable_program_from_id_64, (%r14);
@@ -1192,14 +1188,14 @@ BB9_7:
 	{
 	.reg .b32 temp_param_reg;
 	.param .align 4 .b8 param0[12];
-	st.param.f32	[param0+0], %f154;
-	st.param.f32	[param0+4], %f153;
-	st.param.f32	[param0+8], %f152;
+	st.param.f32	[param0+0], %f155;
+	st.param.f32	[param0+4], %f154;
+	st.param.f32	[param0+8], %f153;
 	.param .b32 param1;
 	st.param.b32	[param1+0], %r15;
 	.param .b32 param2;
-	st.param.f32	[param2+0], %f99;
-	.param .b32 retval0;
+	st.param.f32	[param2+0], %f104;
+	.param .align 8 .b8 retval0[8];
 	call (retval0), 
 	%rd3, 
 	(
@@ -1208,26 +1204,24 @@ BB9_7:
 	param2
 	)
 	, prototype_2;
-	ld.param.f32	%f155, [retval0+0];
+	ld.param.f32	%f156, [retval0+0];
+	ld.param.f32	%f38, [retval0+4];
 	}
 	// Callseq End 2
-	fma.rn.ftz.f32 	%f154, %f10, %f155, %f154;
-	fma.rn.ftz.f32 	%f153, %f11, %f155, %f153;
-	fma.rn.ftz.f32 	%f152, %f12, %f155, %f152;
-	fma.rn.ftz.f32 	%f151, %f155, 0f3F7D70A4, %f151;
-	setp.lt.ftz.f32	%p14, %f155, 0f3A83126F;
-	setp.gt.ftz.f32	%p15, %f151, %f150;
+	fma.rn.ftz.f32 	%f155, %f10, %f156, %f155;
+	fma.rn.ftz.f32 	%f154, %f11, %f156, %f154;
+	fma.rn.ftz.f32 	%f153, %f12, %f156, %f153;
+	fma.rn.ftz.f32 	%f152, %f156, 0f3F7D70A4, %f152;
+	setp.lt.ftz.f32	%p14, %f156, 0f3A83126F;
+	setp.gt.ftz.f32	%p15, %f152, %f151;
 	or.pred  	%p16, %p14, %p15;
 	mov.u32 	%r31, %r3;
 	@%p16 bra 	BB9_13;
 
-	add.ftz.f32 	%f100, %f154, 0fBF000000;
-	mul.ftz.f32 	%f101, %f153, %f153;
-	fma.rn.ftz.f32 	%f102, %f100, %f100, %f101;
-	fma.rn.ftz.f32 	%f156, %f152, %f152, %f102;
+	min.ftz.f32 	%f157, %f157, %f38;
 	add.s32 	%r4, %r1, 3;
 	ld.global.u32 	%r17, [max_iterations];
-	ld.global.f32 	%f103, [global_t];
+	ld.global.f32 	%f105, [global_t];
 	ld.global.u32 	%r16, [do_work];
 	// inline asm
 	call (%rd4), _rt_callable_program_from_id_64, (%r16);
@@ -1236,14 +1230,14 @@ BB9_7:
 	{
 	.reg .b32 temp_param_reg;
 	.param .align 4 .b8 param0[12];
-	st.param.f32	[param0+0], %f154;
-	st.param.f32	[param0+4], %f153;
-	st.param.f32	[param0+8], %f152;
+	st.param.f32	[param0+0], %f155;
+	st.param.f32	[param0+4], %f154;
+	st.param.f32	[param0+8], %f153;
 	.param .b32 param1;
 	st.param.b32	[param1+0], %r17;
 	.param .b32 param2;
-	st.param.f32	[param2+0], %f103;
-	.param .b32 retval0;
+	st.param.f32	[param2+0], %f105;
+	.param .align 8 .b8 retval0[8];
 	call (retval0), 
 	%rd4, 
 	(
@@ -1252,26 +1246,24 @@ BB9_7:
 	param2
 	)
 	, prototype_3;
-	ld.param.f32	%f155, [retval0+0];
+	ld.param.f32	%f156, [retval0+0];
+	ld.param.f32	%f46, [retval0+4];
 	}
 	// Callseq End 3
-	fma.rn.ftz.f32 	%f154, %f10, %f155, %f154;
-	fma.rn.ftz.f32 	%f153, %f11, %f155, %f153;
-	fma.rn.ftz.f32 	%f152, %f12, %f155, %f152;
-	fma.rn.ftz.f32 	%f151, %f155, 0f3F7D70A4, %f151;
-	setp.lt.ftz.f32	%p17, %f155, 0f3A83126F;
-	setp.gt.ftz.f32	%p18, %f151, %f150;
+	fma.rn.ftz.f32 	%f155, %f10, %f156, %f155;
+	fma.rn.ftz.f32 	%f154, %f11, %f156, %f154;
+	fma.rn.ftz.f32 	%f153, %f12, %f156, %f153;
+	fma.rn.ftz.f32 	%f152, %f156, 0f3F7D70A4, %f152;
+	setp.lt.ftz.f32	%p17, %f156, 0f3A83126F;
+	setp.gt.ftz.f32	%p18, %f152, %f151;
 	or.pred  	%p19, %p17, %p18;
 	mov.u32 	%r31, %r4;
 	@%p19 bra 	BB9_13;
 
-	add.ftz.f32 	%f104, %f154, 0fBF000000;
-	mul.ftz.f32 	%f105, %f153, %f153;
-	fma.rn.ftz.f32 	%f106, %f104, %f104, %f105;
-	fma.rn.ftz.f32 	%f156, %f152, %f152, %f106;
+	min.ftz.f32 	%f157, %f157, %f46;
 	add.s32 	%r5, %r1, 4;
 	ld.global.u32 	%r19, [max_iterations];
-	ld.global.f32 	%f107, [global_t];
+	ld.global.f32 	%f106, [global_t];
 	ld.global.u32 	%r18, [do_work];
 	// inline asm
 	call (%rd5), _rt_callable_program_from_id_64, (%r18);
@@ -1280,14 +1272,14 @@ BB9_7:
 	{
 	.reg .b32 temp_param_reg;
 	.param .align 4 .b8 param0[12];
-	st.param.f32	[param0+0], %f154;
-	st.param.f32	[param0+4], %f153;
-	st.param.f32	[param0+8], %f152;
+	st.param.f32	[param0+0], %f155;
+	st.param.f32	[param0+4], %f154;
+	st.param.f32	[param0+8], %f153;
 	.param .b32 param1;
 	st.param.b32	[param1+0], %r19;
 	.param .b32 param2;
-	st.param.f32	[param2+0], %f107;
-	.param .b32 retval0;
+	st.param.f32	[param2+0], %f106;
+	.param .align 8 .b8 retval0[8];
 	call (retval0), 
 	%rd5, 
 	(
@@ -1296,23 +1288,21 @@ BB9_7:
 	param2
 	)
 	, prototype_4;
-	ld.param.f32	%f155, [retval0+0];
+	ld.param.f32	%f156, [retval0+0];
+	ld.param.f32	%f54, [retval0+4];
 	}
 	// Callseq End 4
-	fma.rn.ftz.f32 	%f154, %f10, %f155, %f154;
-	fma.rn.ftz.f32 	%f153, %f11, %f155, %f153;
-	fma.rn.ftz.f32 	%f152, %f12, %f155, %f152;
-	fma.rn.ftz.f32 	%f151, %f155, 0f3F7D70A4, %f151;
-	setp.lt.ftz.f32	%p20, %f155, 0f3A83126F;
-	setp.gt.ftz.f32	%p21, %f151, %f150;
+	fma.rn.ftz.f32 	%f155, %f10, %f156, %f155;
+	fma.rn.ftz.f32 	%f154, %f11, %f156, %f154;
+	fma.rn.ftz.f32 	%f153, %f12, %f156, %f153;
+	fma.rn.ftz.f32 	%f152, %f156, 0f3F7D70A4, %f152;
+	setp.lt.ftz.f32	%p20, %f156, 0f3A83126F;
+	setp.gt.ftz.f32	%p21, %f152, %f151;
 	or.pred  	%p22, %p20, %p21;
 	mov.u32 	%r31, %r5;
 	@%p22 bra 	BB9_13;
 
-	add.ftz.f32 	%f108, %f154, 0fBF000000;
-	mul.ftz.f32 	%f109, %f153, %f153;
-	fma.rn.ftz.f32 	%f110, %f108, %f108, %f109;
-	fma.rn.ftz.f32 	%f156, %f152, %f152, %f110;
+	min.ftz.f32 	%f157, %f157, %f54;
 	add.s32 	%r32, %r1, 5;
 	setp.lt.u32	%p23, %r32, 800;
 	@%p23 bra 	BB9_7;
@@ -1322,20 +1312,20 @@ BB9_13:
 	st.global.u32 	[iterations], %r31;
 
 BB9_14:
-	setp.geu.ftz.f32	%p24, %f155, 0f3A83126F;
+	setp.geu.ftz.f32	%p24, %f156, 0f3A83126F;
 	@%p24 bra 	BB9_17;
 
 	// inline asm
-	call (%r20), _rt_potential_intersection, (%f151);
+	call (%r20), _rt_potential_intersection, (%f152);
 	// inline asm
 	setp.eq.s32	%p25, %r20, 0;
 	@%p25 bra 	BB9_17;
 
-	ld.global.f32 	%f112, [DEL];
-	add.ftz.f32 	%f113, %f154, %f112;
-	add.ftz.f32 	%f114, %f153, 0f00000000;
-	add.ftz.f32 	%f115, %f152, 0f00000000;
-	ld.global.f32 	%f116, [global_t];
+	ld.global.f32 	%f108, [DEL];
+	add.ftz.f32 	%f109, %f155, %f108;
+	add.ftz.f32 	%f110, %f154, 0f00000000;
+	add.ftz.f32 	%f111, %f153, 0f00000000;
+	ld.global.f32 	%f112, [global_t];
 	ld.global.u32 	%r21, [do_work];
 	// inline asm
 	call (%rd6), _rt_callable_program_from_id_64, (%r21);
@@ -1345,16 +1335,16 @@ BB9_14:
 	{
 	.reg .b32 temp_param_reg;
 	.param .align 4 .b8 param0[12];
-	st.param.f32	[param0+0], %f113;
-	st.param.f32	[param0+4], %f114;
-	st.param.f32	[param0+8], %f115;
+	st.param.f32	[param0+0], %f109;
+	st.param.f32	[param0+4], %f110;
+	st.param.f32	[param0+8], %f111;
 	.param .b32 param1;
 	st.param.b32	[param1+0], %r29;
 	.param .b32 param2;
-	st.param.f32	[param2+0], %f116;
-	.param .b32 retval0;
+	st.param.f32	[param2+0], %f112;
+	.param .align 8 .b8 retval0[8];
 	// inline asm
-	prototype_5 : .callprototype (.param .b32 _) _ (.param .align 4 .b8 _[12], .param .b32 _, .param .b32 _);
+	prototype_5 : .callprototype (.param .align 8 .b8 _[8]) _ (.param .align 4 .b8 _[12], .param .b32 _, .param .b32 _);
 	// inline asm
 	call (retval0), 
 	%rd6, 
@@ -1364,14 +1354,15 @@ BB9_14:
 	param2
 	)
 	, prototype_5;
-	ld.param.f32	%f117, [retval0+0];
+	ld.param.f32	%f113, [retval0+0];
+	ld.param.f32	%f114, [retval0+4];
 	}
 	// Callseq End 5
 	mov.u32 	%r28, 0;
-	sub.ftz.f32 	%f118, %f154, %f112;
-	add.ftz.f32 	%f119, %f153, 0f80000000;
-	add.ftz.f32 	%f120, %f152, 0f80000000;
-	ld.global.f32 	%f121, [global_t];
+	sub.ftz.f32 	%f115, %f155, %f108;
+	add.ftz.f32 	%f116, %f154, 0f80000000;
+	add.ftz.f32 	%f117, %f153, 0f80000000;
+	ld.global.f32 	%f118, [global_t];
 	ld.global.u32 	%r22, [do_work];
 	// inline asm
 	call (%rd7), _rt_callable_program_from_id_64, (%r22);
@@ -1380,16 +1371,16 @@ BB9_14:
 	{
 	.reg .b32 temp_param_reg;
 	.param .align 4 .b8 param0[12];
-	st.param.f32	[param0+0], %f118;
-	st.param.f32	[param0+4], %f119;
-	st.param.f32	[param0+8], %f120;
+	st.param.f32	[param0+0], %f115;
+	st.param.f32	[param0+4], %f116;
+	st.param.f32	[param0+8], %f117;
 	.param .b32 param1;
 	st.param.b32	[param1+0], %r29;
 	.param .b32 param2;
-	st.param.f32	[param2+0], %f121;
-	.param .b32 retval0;
+	st.param.f32	[param2+0], %f118;
+	.param .align 8 .b8 retval0[8];
 	// inline asm
-	prototype_6 : .callprototype (.param .b32 _) _ (.param .align 4 .b8 _[12], .param .b32 _, .param .b32 _);
+	prototype_6 : .callprototype (.param .align 8 .b8 _[8]) _ (.param .align 4 .b8 _[12], .param .b32 _, .param .b32 _);
 	// inline asm
 	call (retval0), 
 	%rd7, 
@@ -1399,13 +1390,14 @@ BB9_14:
 	param2
 	)
 	, prototype_6;
-	ld.param.f32	%f122, [retval0+0];
+	ld.param.f32	%f119, [retval0+0];
+	ld.param.f32	%f120, [retval0+4];
 	}
 	// Callseq End 6
-	sub.ftz.f32 	%f123, %f117, %f122;
-	add.ftz.f32 	%f124, %f153, %f112;
-	add.ftz.f32 	%f125, %f154, 0f00000000;
-	ld.global.f32 	%f126, [global_t];
+	sub.ftz.f32 	%f121, %f113, %f119;
+	add.ftz.f32 	%f122, %f154, %f108;
+	add.ftz.f32 	%f123, %f155, 0f00000000;
+	ld.global.f32 	%f124, [global_t];
 	ld.global.u32 	%r23, [do_work];
 	// inline asm
 	call (%rd8), _rt_callable_program_from_id_64, (%r23);
@@ -1414,16 +1406,16 @@ BB9_14:
 	{
 	.reg .b32 temp_param_reg;
 	.param .align 4 .b8 param0[12];
-	st.param.f32	[param0+0], %f125;
-	st.param.f32	[param0+4], %f124;
-	st.param.f32	[param0+8], %f115;
+	st.param.f32	[param0+0], %f123;
+	st.param.f32	[param0+4], %f122;
+	st.param.f32	[param0+8], %f111;
 	.param .b32 param1;
 	st.param.b32	[param1+0], %r29;
 	.param .b32 param2;
-	st.param.f32	[param2+0], %f126;
-	.param .b32 retval0;
+	st.param.f32	[param2+0], %f124;
+	.param .align 8 .b8 retval0[8];
 	// inline asm
-	prototype_7 : .callprototype (.param .b32 _) _ (.param .align 4 .b8 _[12], .param .b32 _, .param .b32 _);
+	prototype_7 : .callprototype (.param .align 8 .b8 _[8]) _ (.param .align 4 .b8 _[12], .param .b32 _, .param .b32 _);
 	// inline asm
 	call (retval0), 
 	%rd8, 
@@ -1433,12 +1425,13 @@ BB9_14:
 	param2
 	)
 	, prototype_7;
-	ld.param.f32	%f127, [retval0+0];
+	ld.param.f32	%f125, [retval0+0];
+	ld.param.f32	%f126, [retval0+4];
 	}
 	// Callseq End 7
-	sub.ftz.f32 	%f128, %f153, %f112;
-	add.ftz.f32 	%f129, %f154, 0f80000000;
-	ld.global.f32 	%f130, [global_t];
+	sub.ftz.f32 	%f127, %f154, %f108;
+	add.ftz.f32 	%f128, %f155, 0f80000000;
+	ld.global.f32 	%f129, [global_t];
 	ld.global.u32 	%r24, [do_work];
 	// inline asm
 	call (%rd9), _rt_callable_program_from_id_64, (%r24);
@@ -1447,16 +1440,16 @@ BB9_14:
 	{
 	.reg .b32 temp_param_reg;
 	.param .align 4 .b8 param0[12];
-	st.param.f32	[param0+0], %f129;
-	st.param.f32	[param0+4], %f128;
-	st.param.f32	[param0+8], %f120;
+	st.param.f32	[param0+0], %f128;
+	st.param.f32	[param0+4], %f127;
+	st.param.f32	[param0+8], %f117;
 	.param .b32 param1;
 	st.param.b32	[param1+0], %r29;
 	.param .b32 param2;
-	st.param.f32	[param2+0], %f130;
-	.param .b32 retval0;
+	st.param.f32	[param2+0], %f129;
+	.param .align 8 .b8 retval0[8];
 	// inline asm
-	prototype_8 : .callprototype (.param .b32 _) _ (.param .align 4 .b8 _[12], .param .b32 _, .param .b32 _);
+	prototype_8 : .callprototype (.param .align 8 .b8 _[8]) _ (.param .align 4 .b8 _[12], .param .b32 _, .param .b32 _);
 	// inline asm
 	call (retval0), 
 	%rd9, 
@@ -1466,11 +1459,12 @@ BB9_14:
 	param2
 	)
 	, prototype_8;
-	ld.param.f32	%f131, [retval0+0];
+	ld.param.f32	%f130, [retval0+0];
+	ld.param.f32	%f131, [retval0+4];
 	}
 	// Callseq End 8
-	sub.ftz.f32 	%f132, %f127, %f131;
-	add.ftz.f32 	%f133, %f152, %f112;
+	sub.ftz.f32 	%f132, %f125, %f130;
+	add.ftz.f32 	%f133, %f153, %f108;
 	ld.global.f32 	%f134, [global_t];
 	ld.global.u32 	%r25, [do_work];
 	// inline asm
@@ -1480,16 +1474,16 @@ BB9_14:
 	{
 	.reg .b32 temp_param_reg;
 	.param .align 4 .b8 param0[12];
-	st.param.f32	[param0+0], %f125;
-	st.param.f32	[param0+4], %f114;
+	st.param.f32	[param0+0], %f123;
+	st.param.f32	[param0+4], %f110;
 	st.param.f32	[param0+8], %f133;
 	.param .b32 param1;
 	st.param.b32	[param1+0], %r29;
 	.param .b32 param2;
 	st.param.f32	[param2+0], %f134;
-	.param .b32 retval0;
+	.param .align 8 .b8 retval0[8];
 	// inline asm
-	prototype_9 : .callprototype (.param .b32 _) _ (.param .align 4 .b8 _[12], .param .b32 _, .param .b32 _);
+	prototype_9 : .callprototype (.param .align 8 .b8 _[8]) _ (.param .align 4 .b8 _[12], .param .b32 _, .param .b32 _);
 	// inline asm
 	call (retval0), 
 	%rd10, 
@@ -1500,10 +1494,11 @@ BB9_14:
 	)
 	, prototype_9;
 	ld.param.f32	%f135, [retval0+0];
+	ld.param.f32	%f136, [retval0+4];
 	}
 	// Callseq End 9
-	sub.ftz.f32 	%f136, %f152, %f112;
-	ld.global.f32 	%f137, [global_t];
+	sub.ftz.f32 	%f137, %f153, %f108;
+	ld.global.f32 	%f138, [global_t];
 	ld.global.u32 	%r26, [do_work];
 	// inline asm
 	call (%rd11), _rt_callable_program_from_id_64, (%r26);
@@ -1512,16 +1507,16 @@ BB9_14:
 	{
 	.reg .b32 temp_param_reg;
 	.param .align 4 .b8 param0[12];
-	st.param.f32	[param0+0], %f129;
-	st.param.f32	[param0+4], %f119;
-	st.param.f32	[param0+8], %f136;
+	st.param.f32	[param0+0], %f128;
+	st.param.f32	[param0+4], %f116;
+	st.param.f32	[param0+8], %f137;
 	.param .b32 param1;
 	st.param.b32	[param1+0], %r29;
 	.param .b32 param2;
-	st.param.f32	[param2+0], %f137;
-	.param .b32 retval0;
+	st.param.f32	[param2+0], %f138;
+	.param .align 8 .b8 retval0[8];
 	// inline asm
-	prototype_10 : .callprototype (.param .b32 _) _ (.param .align 4 .b8 _[12], .param .b32 _, .param .b32 _);
+	prototype_10 : .callprototype (.param .align 8 .b8 _[8]) _ (.param .align 4 .b8 _[12], .param .b32 _, .param .b32 _);
 	// inline asm
 	call (retval0), 
 	%rd11, 
@@ -1531,26 +1526,26 @@ BB9_14:
 	param2
 	)
 	, prototype_10;
-	ld.param.f32	%f138, [retval0+0];
+	ld.param.f32	%f139, [retval0+0];
+	ld.param.f32	%f140, [retval0+4];
 	}
 	// Callseq End 10
-	sub.ftz.f32 	%f139, %f135, %f138;
-	mul.ftz.f32 	%f140, %f132, %f132;
-	fma.rn.ftz.f32 	%f141, %f123, %f123, %f140;
-	fma.rn.ftz.f32 	%f142, %f139, %f139, %f141;
-	sqrt.approx.ftz.f32 	%f143, %f142;
-	rcp.approx.ftz.f32 	%f144, %f143;
-	mul.ftz.f32 	%f145, %f139, %f144;
-	mul.ftz.f32 	%f146, %f132, %f144;
-	mul.ftz.f32 	%f147, %f123, %f144;
-	st.global.v2.f32 	[normal], {%f147, %f146};
-	st.global.f32 	[normal+8], %f145;
-	st.global.v2.f32 	[geometric_normal], {%f147, %f146};
-	st.global.f32 	[geometric_normal+8], %f145;
-	st.global.v2.f32 	[shading_normal], {%f147, %f146};
-	st.global.f32 	[shading_normal+8], %f145;
-	sqrt.approx.ftz.f32 	%f148, %f156;
-	st.global.f32 	[smallestdistance], %f148;
+	sub.ftz.f32 	%f141, %f135, %f139;
+	mul.ftz.f32 	%f142, %f132, %f132;
+	fma.rn.ftz.f32 	%f143, %f121, %f121, %f142;
+	fma.rn.ftz.f32 	%f144, %f141, %f141, %f143;
+	sqrt.approx.ftz.f32 	%f145, %f144;
+	rcp.approx.ftz.f32 	%f146, %f145;
+	mul.ftz.f32 	%f147, %f141, %f146;
+	mul.ftz.f32 	%f148, %f132, %f146;
+	mul.ftz.f32 	%f149, %f121, %f146;
+	st.global.v2.f32 	[normal], {%f149, %f148};
+	st.global.f32 	[normal+8], %f147;
+	st.global.f32 	[smallestdistance], %f157;
+	st.global.v2.f32 	[geometric_normal], {%f149, %f148};
+	st.global.f32 	[geometric_normal+8], %f147;
+	st.global.v2.f32 	[shading_normal], {%f149, %f148};
+	st.global.f32 	[shading_normal+8], %f147;
 	// inline asm
 	call (%r27), _rt_report_intersection, (%r28);
 	// inline asm
@@ -1641,7 +1636,7 @@ BB11_2:
 	.reg .pred 	%p<9>;
 	.reg .s16 	%rs<3>;
 	.reg .s32 	%r<42>;
-	.reg .f32 	%f<286>;
+	.reg .f32 	%f<301>;
 	.reg .s64 	%rd<21>;
 	.reg .f64 	%fd<14>;
 
@@ -1653,9 +1648,9 @@ BB11_2:
 	ldu.global.f32 	%f45, [%rd10];
 	ldu.global.v2.f32 	{%f55, %f56}, [shading_normal];
 	mov.u32 	%r7, 7937;
-	mov.f32 	%f285, 0f00000000;
+	mov.f32 	%f300, 0f00000000;
 	// inline asm
-	call (%f39, %f40, %f41, %f42), _rt_transform_tuple, (%r7, %f55, %f56, %f45, %f285);
+	call (%f39, %f40, %f41, %f42), _rt_transform_tuple, (%r7, %f55, %f56, %f45, %f300);
 	// inline asm
 	mul.ftz.f32 	%f57, %f40, %f40;
 	fma.rn.ftz.f32 	%f58, %f39, %f39, %f57;
@@ -1668,7 +1663,7 @@ BB11_2:
 	ld.global.f32 	%f53, [geometric_normal+8];
 	ld.global.v2.f32 	{%f65, %f66}, [geometric_normal];
 	// inline asm
-	call (%f47, %f48, %f49, %f50), _rt_transform_tuple, (%r7, %f65, %f66, %f53, %f285);
+	call (%f47, %f48, %f49, %f50), _rt_transform_tuple, (%r7, %f65, %f66, %f53, %f300);
 	// inline asm
 	mul.ftz.f32 	%f67, %f48, %f48;
 	fma.rn.ftz.f32 	%f68, %f47, %f47, %f67;
@@ -1772,9 +1767,9 @@ BB11_2:
 	setp.ne.s32	%p1, %r1, 0;
 	@%p1 bra 	BB13_2;
 
-	mov.f32 	%f285, 0f00000000;
-	mov.f32 	%f284, %f285;
-	mov.f32 	%f283, %f285;
+	mov.f32 	%f300, 0f00000000;
+	mov.f32 	%f299, %f300;
+	mov.f32 	%f298, %f300;
 	bra.uni 	BB13_9;
 
 BB13_2:
@@ -1797,8 +1792,8 @@ BB13_2:
 	mul.ftz.f32 	%f155, %f8, %f8;
 	fma.rn.ftz.f32 	%f156, %f7, %f7, %f155;
 	fma.rn.ftz.f32 	%f10, %f9, %f9, %f156;
-	mov.f32 	%f284, %f285;
-	mov.f32 	%f283, %f285;
+	mov.f32 	%f299, %f300;
+	mov.f32 	%f298, %f300;
 	mov.u64 	%rd11, 0;
 	sqrt.approx.ftz.f32 	%f239, %f10;
 	rcp.approx.ftz.f32 	%f240, %f239;
@@ -1909,16 +1904,16 @@ BB13_4:
 	setp.gt.s32	%p7, %r4, 2;
 	@%p7 bra 	BB13_8;
 
-	mov.f32 	%f282, 0f4B800000;
+	mov.f32 	%f297, 0f4B800000;
 	ld.global.u32 	%r32, [current_prd+92];
 	mad.lo.s32 	%r33, %r32, 1664525, 1013904223;
 	and.b32  	%r34, %r33, 16777215;
 	cvt.rn.f32.u32	%f220, %r34;
-	div.approx.ftz.f32 	%f222, %f220, %f282;
+	div.approx.ftz.f32 	%f222, %f220, %f297;
 	mad.lo.s32 	%r35, %r33, 1664525, 1013904223;
 	and.b32  	%r36, %r35, 16777215;
 	cvt.rn.f32.u32	%f223, %r36;
-	div.approx.ftz.f32 	%f224, %f223, %f282;
+	div.approx.ftz.f32 	%f224, %f223, %f297;
 	sqrt.approx.ftz.f32 	%f225, %f222;
 	mul.ftz.f32 	%f226, %f224, 0f40C90FDB;
 	cos.approx.ftz.f32 	%f227, %f226;
@@ -1973,9 +1968,9 @@ BB13_4:
 	call _rt_trace_64, (%r29, %f212, %f213, %f214, %f215, %f216, %f217, %r30, %f218, %f219, %rd19, %r31);
 	// inline asm
 	ld.global.v4.f32 	{%f259, %f260, %f261, %f262}, [current_prd];
-	add.ftz.f32 	%f285, %f285, %f259;
-	add.ftz.f32 	%f284, %f284, %f260;
-	add.ftz.f32 	%f283, %f283, %f261;
+	add.ftz.f32 	%f300, %f300, %f259;
+	add.ftz.f32 	%f299, %f299, %f260;
+	add.ftz.f32 	%f298, %f298, %f261;
 	bra.uni 	BB13_8;
 
 BB13_7:
@@ -1985,9 +1980,9 @@ BB13_7:
 	mul.ftz.f32 	%f269, %f17, 0f40490FDB;
 	mul.ftz.f32 	%f270, %f269, %f17;
 	div.approx.ftz.f32 	%f271, %f268, %f270;
-	fma.rn.ftz.f32 	%f285, %f14, %f271, %f285;
-	fma.rn.ftz.f32 	%f284, %f15, %f271, %f284;
-	fma.rn.ftz.f32 	%f283, %f16, %f271, %f283;
+	fma.rn.ftz.f32 	%f300, %f14, %f271, %f300;
+	fma.rn.ftz.f32 	%f299, %f15, %f271, %f299;
+	fma.rn.ftz.f32 	%f298, %f16, %f271, %f298;
 
 BB13_8:
 	add.s64 	%rd3, %rd1, 1;
@@ -1997,14 +1992,29 @@ BB13_8:
 	@%p8 bra 	BB13_3;
 
 BB13_9:
-	mov.f32 	%f275, 0f3F800000;
-	st.global.v4.f32 	[current_prd], {%f285, %f284, %f283, %f275};
-	ld.global.v2.f32 	{%f276, %f277}, [shading_normal];
-	ld.global.f32 	%f280, [shading_normal+8];
-	st.global.v4.f32 	[current_prd+16], {%f276, %f277, %f280, %f4};
+	ld.global.f32 	%f275, [smallestdistance];
+	lg2.approx.ftz.f32 	%f276, %f275;
+	ex2.approx.ftz.f32 	%f277, %f276;
+	mov.f32 	%f278, 0f3DCCCCCD;
+	sub.ftz.f32 	%f279, %f278, 0f3ECCCCCD;
+	mov.f32 	%f280, 0f3E4CCCCD;
+	sub.ftz.f32 	%f281, %f280, 0f3DCCCCCD;
+	mov.f32 	%f282, 0f3F333333;
+	sub.ftz.f32 	%f283, %f282, 0f3D4CCCCD;
+	fma.rn.ftz.f32 	%f284, %f279, %f277, 0f3ECCCCCD;
+	fma.rn.ftz.f32 	%f285, %f281, %f277, 0f3DCCCCCD;
+	fma.rn.ftz.f32 	%f286, %f283, %f277, 0f3D4CCCCD;
+	mul.ftz.f32 	%f287, %f298, %f286;
+	mul.ftz.f32 	%f288, %f299, %f285;
+	mul.ftz.f32 	%f289, %f300, %f284;
+	mov.f32 	%f290, 0f3F800000;
+	st.global.v4.f32 	[current_prd], {%f289, %f288, %f287, %f290};
+	ld.global.v2.f32 	{%f291, %f292}, [shading_normal];
+	ld.global.f32 	%f295, [shading_normal+8];
+	st.global.v4.f32 	[current_prd+16], {%f291, %f292, %f295, %f4};
 	st.global.v2.f32 	[current_prd+32], {%f5, %f6};
-	ld.global.f32 	%f281, [t_hit];
-	st.global.f32 	[current_prd+40], %f281;
+	ld.global.f32 	%f296, [t_hit];
+	st.global.f32 	[current_prd+40], %f296;
 	st.global.u32 	[current_prd+104], %r8;
 	ret;
 }
@@ -2229,8 +2239,8 @@ BB16_8:
 	ret;
 }
 
-.visible .func _ZN5optix22boundCallableProgramIdIFf6float3ifEEC2Ev(
-	.param .b64 _ZN5optix22boundCallableProgramIdIFf6float3ifEEC2Ev_param_0
+.visible .func _ZN5optix22boundCallableProgramIdIF6float26float3ifEEC2Ev(
+	.param .b64 _ZN5optix22boundCallableProgramIdIF6float26float3ifEEC2Ev_param_0
 )
 {
 
@@ -2239,8 +2249,8 @@ BB16_8:
 	ret;
 }
 
-.visible .func _ZN28rti_internal_callableprogram21callableProgramIdBaseIf6float3ifNS_9CPArgVoidES2_S2_S2_S2_S2_S2_EC2Ev(
-	.param .b64 _ZN28rti_internal_callableprogram21callableProgramIdBaseIf6float3ifNS_9CPArgVoidES2_S2_S2_S2_S2_S2_EC2Ev_param_0
+.visible .func _ZN28rti_internal_callableprogram21callableProgramIdBaseI6float26float3ifNS_9CPArgVoidES3_S3_S3_S3_S3_S3_EC2Ev(
+	.param .b64 _ZN28rti_internal_callableprogram21callableProgramIdBaseI6float26float3ifNS_9CPArgVoidES3_S3_S3_S3_S3_S3_EC2Ev_param_0
 )
 {
 
