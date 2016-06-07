@@ -2082,22 +2082,22 @@ BB13_9:
 {
 	.reg .pred 	%p<13>;
 	.reg .s32 	%r<15>;
-	.reg .f32 	%f<89>;
-	.reg .s64 	%rd<12>;
+	.reg .f32 	%f<91>;
+	.reg .s64 	%rd<11>;
 
 
 	mov.u64 	%rd1, ray;
 	add.s64 	%rd2, %rd1, 12;
-	ldu.global.f32 	%f10, [%rd2];
+	ldu.global.f32 	%f12, [%rd2];
 	add.s64 	%rd3, %rd1, 20;
-	ldu.global.f32 	%f11, [%rd3];
-	abs.ftz.f32 	%f1, %f11;
-	abs.ftz.f32 	%f2, %f10;
+	ldu.global.f32 	%f13, [%rd3];
+	abs.ftz.f32 	%f1, %f13;
+	abs.ftz.f32 	%f2, %f12;
 	setp.eq.ftz.f32	%p1, %f1, 0f00000000;
 	setp.eq.ftz.f32	%p2, %f2, 0f00000000;
 	and.pred  	%p3, %p1, %p2;
-	mov.b32 	 %r1, %f11;
-	mov.b32 	 %r3, %f10;
+	mov.b32 	 %r1, %f13;
+	mov.b32 	 %r3, %f12;
 	and.b32  	%r2, %r3, -2147483648;
 	@%p3 bra 	BB16_4;
 
@@ -2106,38 +2106,38 @@ BB13_9:
 	and.pred  	%p6, %p4, %p5;
 	@%p6 bra 	BB16_3;
 
-	max.ftz.f32 	%f12, %f2, %f1;
-	min.ftz.f32 	%f13, %f2, %f1;
-	div.full.ftz.f32 	%f14, %f13, %f12;
-	mul.rn.ftz.f32 	%f15, %f14, %f14;
-	mov.f32 	%f16, 0fC0B59883;
-	mov.f32 	%f17, 0fBF52C7EA;
-	fma.rn.ftz.f32 	%f18, %f15, %f17, %f16;
-	mov.f32 	%f19, 0fC0D21907;
-	fma.rn.ftz.f32 	%f20, %f18, %f15, %f19;
-	mul.ftz.f32 	%f21, %f20, %f15;
-	mul.ftz.f32 	%f22, %f21, %f14;
-	add.ftz.f32 	%f23, %f15, 0f41355DC0;
-	mov.f32 	%f24, 0f41E6BD60;
-	fma.rn.ftz.f32 	%f25, %f23, %f15, %f24;
-	mov.f32 	%f26, 0f419D92C8;
-	fma.rn.ftz.f32 	%f27, %f25, %f15, %f26;
-	rcp.approx.ftz.f32 	%f28, %f27;
-	fma.rn.ftz.f32 	%f29, %f22, %f28, %f14;
-	mov.f32 	%f30, 0f3FC90FDB;
-	sub.ftz.f32 	%f31, %f30, %f29;
+	max.ftz.f32 	%f14, %f2, %f1;
+	min.ftz.f32 	%f15, %f2, %f1;
+	div.full.ftz.f32 	%f16, %f15, %f14;
+	mul.rn.ftz.f32 	%f17, %f16, %f16;
+	mov.f32 	%f18, 0fC0B59883;
+	mov.f32 	%f19, 0fBF52C7EA;
+	fma.rn.ftz.f32 	%f20, %f17, %f19, %f18;
+	mov.f32 	%f21, 0fC0D21907;
+	fma.rn.ftz.f32 	%f22, %f20, %f17, %f21;
+	mul.ftz.f32 	%f23, %f22, %f17;
+	mul.ftz.f32 	%f24, %f23, %f16;
+	add.ftz.f32 	%f25, %f17, 0f41355DC0;
+	mov.f32 	%f26, 0f41E6BD60;
+	fma.rn.ftz.f32 	%f27, %f25, %f17, %f26;
+	mov.f32 	%f28, 0f419D92C8;
+	fma.rn.ftz.f32 	%f29, %f27, %f17, %f28;
+	rcp.approx.ftz.f32 	%f30, %f29;
+	fma.rn.ftz.f32 	%f31, %f24, %f30, %f16;
+	mov.f32 	%f32, 0f3FC90FDB;
+	sub.ftz.f32 	%f33, %f32, %f31;
 	setp.gt.ftz.f32	%p7, %f2, %f1;
-	selp.f32	%f32, %f31, %f29, %p7;
-	mov.f32 	%f33, 0f40490FDB;
-	sub.ftz.f32 	%f34, %f33, %f32;
+	selp.f32	%f34, %f33, %f31, %p7;
+	mov.f32 	%f35, 0f40490FDB;
+	sub.ftz.f32 	%f36, %f35, %f34;
 	setp.lt.s32	%p8, %r1, 0;
-	selp.f32	%f35, %f34, %f32, %p8;
-	mov.b32 	 %r4, %f35;
+	selp.f32	%f37, %f36, %f34, %p8;
+	mov.b32 	 %r4, %f37;
 	or.b32  	%r5, %r4, %r2;
-	mov.b32 	 %f36, %r5;
-	add.ftz.f32 	%f37, %f1, %f2;
-	setp.gtu.ftz.f32	%p9, %f37, 0f7F800000;
-	selp.f32	%f87, %f37, %f36, %p9;
+	mov.b32 	 %f38, %r5;
+	add.ftz.f32 	%f39, %f1, %f2;
+	setp.gtu.ftz.f32	%p9, %f39, 0f7F800000;
+	selp.f32	%f89, %f39, %f38, %p9;
 	bra.uni 	BB16_5;
 
 BB16_3:
@@ -2145,43 +2145,25 @@ BB16_3:
 	and.b32  	%r7, %r6, 13483017;
 	add.s32 	%r8, %r7, 1061752795;
 	or.b32  	%r9, %r8, %r2;
-	mov.b32 	 %f87, %r9;
+	mov.b32 	 %f89, %r9;
 	bra.uni 	BB16_5;
 
 BB16_4:
 	shr.s32 	%r10, %r1, 31;
 	and.b32  	%r11, %r10, 1078530011;
 	or.b32  	%r12, %r11, %r2;
-	mov.b32 	 %f87, %r12;
+	mov.b32 	 %f89, %r12;
 
 BB16_5:
-	mov.u32 	%r13, 1;
-	st.global.u32 	[current_prd+108], %r13;
-	mov.u64 	%rd4, current_prd;
-	add.s64 	%rd5, %rd4, 100;
-	ldu.global.u32 	%r14, [%rd5];
-	setp.gt.s32	%p10, %r14, 0;
-	@%p10 bra 	BB16_7;
-
-	mov.u64 	%rd6, bg_color;
-	add.s64 	%rd7, %rd6, 4;
-	add.s64 	%rd8, %rd6, 8;
-	ldu.global.f32 	%f88, [%rd8];
-	ldu.global.f32 	%f38, [%rd7];
-	ldu.global.f32 	%f39, [bg_color];
-	st.global.v2.f32 	[current_prd], {%f39, %f38};
-	bra.uni 	BB16_8;
-
-BB16_7:
-	add.s64 	%rd11, %rd1, 16;
-	ldu.global.f32 	%f46, [%rd11];
+	add.s64 	%rd6, %rd1, 16;
+	ldu.global.f32 	%f46, [%rd6];
 	abs.ftz.f32 	%f47, %f46;
 	mov.f32 	%f48, 0f3F800000;
 	sub.ftz.f32 	%f49, %f48, %f47;
 	mul.ftz.f32 	%f50, %f49, 0f3F000000;
 	sqrt.approx.ftz.f32 	%f51, %f50;
-	setp.gt.ftz.f32	%p11, %f47, 0f3F11EB85;
-	selp.f32	%f52, %f51, %f47, %p11;
+	setp.gt.ftz.f32	%p10, %f47, 0f3F11EB85;
+	selp.f32	%f52, %f51, %f47, %p10;
 	mul.ftz.f32 	%f53, %f52, %f52;
 	mov.f32 	%f54, 0f3C94D2E9;
 	mov.f32 	%f55, 0f3D53F941;
@@ -2197,34 +2179,51 @@ BB16_7:
 	add.ftz.f32 	%f65, %f64, %f64;
 	mov.f32 	%f66, 0f3FC90FDB;
 	sub.ftz.f32 	%f67, %f66, %f64;
-	selp.f32	%f68, %f65, %f67, %p11;
-	setp.lt.ftz.f32	%p12, %f46, 0f00000000;
+	selp.f32	%f68, %f65, %f67, %p10;
+	setp.lt.ftz.f32	%p11, %f46, 0f00000000;
 	mov.f32 	%f69, 0f40490FDB;
 	sub.ftz.f32 	%f70, %f69, %f68;
-	selp.f32	%f71, %f70, %f68, %p12;
+	selp.f32	%f71, %f70, %f68, %p11;
 	sub.ftz.f32 	%f72, %f66, %f71;
-	add.ftz.f32 	%f73, %f87, 0f40490FDB;
+	add.ftz.f32 	%f73, %f89, 0f40490FDB;
 	mul.ftz.f32 	%f44, %f73, 0f3E22F983;
 	sin.approx.ftz.f32 	%f74, %f72;
 	add.ftz.f32 	%f75, %f74, 0f3F800000;
 	mul.ftz.f32 	%f45, %f75, 0f3F000000;
+	mov.u32 	%r13, 1;
+	st.global.u32 	[current_prd+108], %r13;
+	mov.u64 	%rd7, current_prd;
+	add.s64 	%rd8, %rd7, 100;
+	ldu.global.u32 	%r14, [%rd8];
+	setp.gt.s32	%p12, %r14, 0;
 	// inline asm
 	tex.2d.v4.f32.f32 {%f40, %f41, %f42, %f43}, [envmap, {%f44, %f45}];
 	// inline asm
-	ld.global.v4.f32 	{%f76, %f77, %f78, %f79}, [current_prd];
-	add.ftz.f32 	%f88, %f78, %f42;
-	add.ftz.f32 	%f82, %f77, %f41;
-	add.ftz.f32 	%f84, %f76, %f40;
-	st.global.v2.f32 	[current_prd], {%f84, %f82};
+	mov.f32 	%f90, %f42;
+	@%p12 bra 	BB16_7;
+
+	mov.u64 	%rd9, bg_color;
+	add.s64 	%rd10, %rd9, 8;
+	ldu.global.f32 	%f76, [%rd10];
+	mov.f32 	%f77, 0f00000000;
+	st.global.v4.f32 	[current_prd], {%f40, %f41, %f76, %f77};
+	bra.uni 	BB16_8;
+
+BB16_7:
+	ld.global.v4.f32 	{%f78, %f79, %f80, %f81}, [current_prd];
+	fma.rn.ftz.f32 	%f90, %f42, 0f40800000, %f80;
+	fma.rn.ftz.f32 	%f84, %f41, 0f40800000, %f79;
+	fma.rn.ftz.f32 	%f86, %f40, 0f40800000, %f78;
+	st.global.v2.f32 	[current_prd], {%f86, %f84};
 
 BB16_8:
-	mov.f32 	%f85, 0f00000000;
-	st.global.v2.f32 	[current_prd+8], {%f88, %f85};
-	st.global.v2.f32 	[current_prd+16], {%f85, %f85};
-	st.global.v2.f32 	[current_prd+32], {%f85, %f85};
-	st.global.v2.f32 	[current_prd+24], {%f85, %f85};
-	mov.f32 	%f86, 0f6C4ECB8F;
-	st.global.v2.f32 	[current_prd+40], {%f86, %f85};
+	mov.f32 	%f87, 0f00000000;
+	st.global.v2.f32 	[current_prd+8], {%f90, %f87};
+	st.global.v2.f32 	[current_prd+16], {%f87, %f87};
+	st.global.v2.f32 	[current_prd+32], {%f87, %f87};
+	st.global.v2.f32 	[current_prd+24], {%f87, %f87};
+	mov.f32 	%f88, 0f6C4ECB8F;
+	st.global.v2.f32 	[current_prd+40], {%f88, %f87};
 	ret;
 }
 
