@@ -2583,7 +2583,7 @@ BB14_9:
 	ret;
 }
 
-.visible .entry _Z7diffusev(
+.visible .entry _Z14simple_diffusev(
 
 )
 {
