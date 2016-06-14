@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.6)  9 JUN 2016 16:20
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2016.1.6)  13 JUN 2016 03:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -762,22 +762,37 @@ e
  [1
 
 {/home/i7245143/src/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+ [2]
+Chapter 1.
+[3
 
-<"images/houdini_mandelbulb".png, id=12, 1927.2pt x 1084.05pt>
+]
+Chapter 2.
+<"images/houdini_mandelbulb".png, id=20, 1927.2pt x 1084.05pt>
 File: "images/houdini_mandelbulb".png Graphic file (type png)
 
 <use "images/houdini_mandelbulb".png>
-Package pdftex.def Info: "images/houdini_mandelbulb".png used on input line 135
+Package pdftex.def Info: "images/houdini_mandelbulb".png used on input line 152
 .
 (pdftex.def)             Requested size: 385.43318pt x 216.80615pt.
- [2
+ [4
 
  <./images/houdini_mandelbulb.png>]
-[3
+[5]
+Chapter 3.
+[6
 
-] [4
+]
+Chapter 4.
+[7
 
-] [5] (./report.bbl [6
+] [8]
+Chapter 5.
+[9
+
+] [10]
+Chapter 6.
+(./report.bbl [11
 
 ]
 Underfull \hbox (badness 2913) in paragraph at lines 4--7
@@ -785,33 +800,33 @@ Underfull \hbox (badness 2913) in paragraph at lines 4--7
 m/n/10.95 http : / / dctsystems . co . uk / RenderMan /
  []
 
-[7
+[12
 
-] [8]) [9] (./report.aux) ) 
+] [13]) [14] (./report.aux) ) 
 Here is how much of TeX's memory you used:
- 6538 strings out of 493054
- 89870 string characters out of 6131199
- 258890 words of memory out of 5000000
- 9922 multiletter control sequences out of 15000+600000
- 15166 words of font info for 58 fonts, out of 8000000 for 9000
+ 6542 strings out of 493054
+ 89917 string characters out of 6131199
+ 259890 words of memory out of 5000000
+ 9926 multiletter control sequences out of 15000+600000
+ 15772 words of font info for 60 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 36i,6n,35p,789b,336s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/home/i7245143/src/texlive/2015/texmf-dist/fonts/en
-c/dvips/cm-super/cm-super-ts1.enc}</home/i7245143/src/texlive/2015/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmbx10.pfb></home/i7245143/src/texlive/2015/texmf
--dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></home/i7245143/src/texlive/201
-5/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></home/i7245143/src/texli
-ve/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></home/i7245143/src
-/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></home/i72451
-43/src/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></home/
-i7245143/src/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-</home/i7245143/src/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt
-10.pfb></home/i7245143/src/texlive/2015/texmf-dist/fonts/type1/public/cm-super/
-sfrm1095.pfb>
-Output written on report.pdf (9 pages, 3474044 bytes).
+ 36i,6n,35p,789b,328s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/home/i7245143/src/texlive/2015/texmf-dist/fonts/
+enc/dvips/cm-super/cm-super-ts1.enc}</home/i7245143/src/texlive/2015/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmbx10.pfb></home/i7245143/src/texlive/2015/tex
+mf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></home/i7245143/src/texlive/2
+015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></home/i7245143/src/tex
+live/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></home/i7245143/s
+rc/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></home/i724
+5143/src/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></hom
+e/i7245143/src/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pf
+b></home/i7245143/src/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+tt10.pfb></home/i7245143/src/texlive/2015/texmf-dist/fonts/type1/public/cm-supe
+r/sfrm1095.pfb>
+Output written on report.pdf (14 pages, 3480939 bytes).
 PDF statistics:
- 74 PDF objects out of 1000 (max. 8388607)
- 51 compressed objects within 1 object stream
+ 90 PDF objects out of 1000 (max. 8388607)
+ 62 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  6 words of extra memory for PDF output out of 10000 (max. 10000000)
 
