@@ -1,38 +1,36 @@
-\contentsline {chapter}{\numberline {1}Introduction}{3}
-\contentsline {section}{\numberline {1.1}Goals}{3}
-\contentsline {chapter}{\numberline {2}Initial Research}{4}
-\contentsline {subsection}{\numberline {2.0.1}Fractal Sequence}{4}
-\contentsline {subsection}{\numberline {2.0.2}FX Shots}{4}
-\contentsline {section}{\numberline {2.1}Trying out existing stuff}{4}
-\contentsline {subsection}{\numberline {2.1.1}Fractals in FX Software}{4}
-\contentsline {section}{\numberline {2.2}Reading the documentation and tutorials}{5}
-\contentsline {chapter}{\numberline {3}Dynamics FX}{6}
-\contentsline {section}{\numberline {3.1}Setting up the simulation}{6}
-\contentsline {section}{\numberline {3.2}Simulation Elements}{6}
-\contentsline {section}{\numberline {3.3}Final Touches}{7}
-\contentsline {chapter}{\numberline {4}Pipeline}{8}
-\contentsline {chapter}{\numberline {5}Fractal Sequence}{10}
-\contentsline {section}{\numberline {5.1}Fractal Tool Requirements}{10}
-\contentsline {section}{\numberline {5.2}Scene Management - Code Reflection}{10}
-\contentsline {subsection}{\numberline {5.2.1}PTX Patching}{10}
-\contentsline {subsection}{\numberline {5.2.2}Optix Callable Programs}{11}
-\contentsline {section}{\numberline {5.3}Rendering Strategy}{11}
-\contentsline {section}{\numberline {5.4}Output}{11}
-\contentsline {subsection}{\numberline {5.4.1}Environment Camera}{12}
-\contentsline {section}{\numberline {5.5}Colouring the fractal consistently}{12}
-\contentsline {section}{\numberline {5.6}How the Shots were achieved}{12}
-\contentsline {subsection}{\numberline {5.6.1}Side Sequence}{12}
-\contentsline {subsection}{\numberline {5.6.2}Tunnel Sequence}{12}
-\contentsline {subsection}{\numberline {5.6.3}Reflected Visor Sequence}{13}
-\contentsline {chapter}{\numberline {6}Future Improvements}{14}
-\contentsline {chapter}{\numberline {7}Conclusion}{15}
-\contentsline {part}{I\hspace {1em}In conclusion}{16}
-\contentsline {chapter}{\numberline {8}Renderer Implementation}{18}
-\contentsline {section}{\numberline {8.1}Performance}{18}
-\contentsline {section}{\numberline {8.2}Scene Management}{18}
-\contentsline {subsection}{\numberline {8.2.1}Saving and loading scenes}{18}
-\contentsline {subsection}{\numberline {8.2.2}Code Reflection}{19}
-\contentsline {subsubsection}{Methods}{19}
-\contentsline {subsection}{\numberline {8.2.3}Runtime Patching}{19}
-\contentsline {subsection}{\numberline {8.2.4}Node Graph}{19}
-\contentsline {subsubsection}{Grammar Definition}{19}
+\contentsline {chapter}{\numberline {1}Introduction}{3}{chapter.1}
+\contentsline {chapter}{\numberline {2}Initial Research}{4}{chapter.2}
+\contentsline {section}{\numberline {2.1}Fractal Sequence}{4}{section.2.1}
+\contentsline {subsection}{\numberline {2.1.1}Fractals in FX Software}{4}{subsection.2.1.1}
+\contentsline {subsection}{\numberline {2.1.2}Distance Estimated Fractals}{4}{subsection.2.1.2}
+\contentsline {section}{\numberline {2.2}Reading the documentation and tutorials}{4}{section.2.2}
+\contentsline {chapter}{\numberline {3}Dynamics FX}{7}{chapter.3}
+\contentsline {section}{\numberline {3.1}Setting up the simulation}{7}{section.3.1}
+\contentsline {section}{\numberline {3.2}Simulation Elements}{7}{section.3.2}
+\contentsline {section}{\numberline {3.3}Final Touches}{8}{section.3.3}
+\contentsline {chapter}{\numberline {4}Pipeline}{9}{chapter.4}
+\contentsline {chapter}{\numberline {5}Fractal Sequence}{11}{chapter.5}
+\contentsline {section}{\numberline {5.1}Fractal Tool Requirements}{11}{section.5.1}
+\contentsline {section}{\numberline {5.2}Scene Management - Code Reflection}{11}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}PTX Patching}{11}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}Optix Callable Programs}{12}{subsection.5.2.2}
+\contentsline {section}{\numberline {5.3}Rendering Strategy}{12}{section.5.3}
+\contentsline {section}{\numberline {5.4}Output}{12}{section.5.4}
+\contentsline {subsection}{\numberline {5.4.1}Environment Camera}{13}{subsection.5.4.1}
+\contentsline {section}{\numberline {5.5}Colouring the fractal consistently}{13}{section.5.5}
+\contentsline {section}{\numberline {5.6}How the Shots were achieved}{13}{section.5.6}
+\contentsline {subsection}{\numberline {5.6.1}Side Sequence}{13}{subsection.5.6.1}
+\contentsline {subsection}{\numberline {5.6.2}Tunnel Sequence}{14}{subsection.5.6.2}
+\contentsline {subsection}{\numberline {5.6.3}Reflected Visor Sequence}{14}{subsection.5.6.3}
+\contentsline {chapter}{\numberline {6}Future Improvements}{16}{chapter.6}
+\contentsline {chapter}{\numberline {7}Conclusion}{17}{chapter.7}
+\contentsline {paragraph}{In conclusion}{17}{section*.7}
+\contentsline {chapter}{\numberline {8}Renderer Implementation}{18}{chapter.8}
+\contentsline {section}{\numberline {8.1}Performance}{18}{section.8.1}
+\contentsline {section}{\numberline {8.2}Scene Management}{18}{section.8.2}
+\contentsline {subsection}{\numberline {8.2.1}Saving and loading scenes}{18}{subsection.8.2.1}
+\contentsline {subsection}{\numberline {8.2.2}Code Reflection}{19}{subsection.8.2.2}
+\contentsline {subsubsection}{Methods}{19}{section*.8}
+\contentsline {subsection}{\numberline {8.2.3}Runtime Patching}{19}{subsection.8.2.3}
+\contentsline {subsection}{\numberline {8.2.4}Node Graph}{19}{subsection.8.2.4}
+\contentsline {subsubsection}{Grammar Definition}{19}{section*.9}
