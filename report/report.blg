@@ -3,50 +3,44 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: report.aux
 The style file: plain-annote.bst
 Database file #1: bib_icereport.bib
-Warning--to sort, need author or key in angel
-Warning--to sort, need author or key in superquad
-Warning--to sort, need author or key in prman
-Warning--to sort, need author or key in rmdocs
-Warning--can't use both author and editor fields in Apodaca:1999:ARC:555371
-You've used 18 entries,
+You've used 3 entries,
             2163 wiz_defined-function locations,
-            627 strings with 8676 characters,
-and the built_in function-call counts, 6856 in all, are:
-= -- 701
-> -- 294
-< -- 8
-+ -- 123
-- -- 100
-* -- 473
-:= -- 1035
-add.period$ -- 64
-call.type$ -- 18
-change.case$ -- 102
+            516 strings with 4440 characters,
+and the built_in function-call counts, 668 in all, are:
+= -- 63
+> -- 21
+< -- 0
++ -- 9
+- -- 6
+* -- 17
+:= -- 117
+add.period$ -- 12
+call.type$ -- 3
+change.case$ -- 12
 chr.to.int$ -- 0
-cite$ -- 23
-duplicate$ -- 283
-empty$ -- 565
-format.name$ -- 100
-if$ -- 1527
+cite$ -- 3
+duplicate$ -- 21
+empty$ -- 70
+format.name$ -- 6
+if$ -- 145
 int.to.chr$ -- 0
-int.to.str$ -- 18
-missing$ -- 17
-newline$ -- 97
-num.names$ -- 28
-pop$ -- 139
+int.to.str$ -- 3
+missing$ -- 0
+newline$ -- 21
+num.names$ -- 6
+pop$ -- 30
 preamble$ -- 1
-purify$ -- 86
+purify$ -- 9
 quote$ -- 0
-skip$ -- 206
+skip$ -- 15
 stack$ -- 0
-substring$ -- 369
-swap$ -- 87
-text.length$ -- 8
+substring$ -- 15
+swap$ -- 3
+text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 66
-warning$ -- 5
-while$ -- 54
-width$ -- 20
-write$ -- 239
-(There were 5 warnings)
+type$ -- 12
+warning$ -- 0
+while$ -- 6
+width$ -- 4
+write$ -- 38
